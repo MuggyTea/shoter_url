@@ -6,10 +6,17 @@ routeを定義する。models.pyで定義したものを呼び出し、リクエ
 
 from flask import Flask, render_template, url_for, request, redirect, json, jsonify
 from flask_restful import Resource, Api, reqparse
-from settings.log_settings import logging_setting
+from app.settings.log_settings import logging_setting
 
-app = Flask(__name__)
-api = Api(app)
+# flaskの設定
+def create_app(app_name="CO-LINKS"):
+    print('create_app')
+    app = Flask(
+        app_name, 
+        static_folder="./dist/static", 
+        template_folder="./dist")
+    # app.config.from_object('backend.config.BaseConfig')
+    return app
 
 class TwitterLogin(Resource):
     """
@@ -46,6 +53,3 @@ class MakeShorterUrl(Resource):
         # ユーザーテーブルに登録するvv
         # ソースURL・ターゲットURL紐付けテーブルに登録する
         # ソースURLの最初の１つ目を取得する
-
-# urlとパスの紐付け
-api.add_resource(MakeShorterUrl, '/make')
