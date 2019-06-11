@@ -106,3 +106,18 @@ venv.bak/
 # vscode
 .history/
 .vscode/
+
+# credential
+co-links-4b6a3-firebase-adminsdk-zc1lr-2bbd9d1360.json
+
+# firebase
+.firebase/
+.firebaserc
+Users/
+app/settings/firebase.py
+database.rules.json
+firebase.json
+firestore,indexes.json
+firestore.rules
+functions/
+storage.rules
