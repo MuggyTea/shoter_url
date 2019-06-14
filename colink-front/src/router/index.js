@@ -18,6 +18,7 @@ import VueRouter from 'vue-router'
 // ページコンポーネントのインポート
 import LinkList from '../components/pages/LinkList'
 import Login from '../components/pages/Login'
+import LinkPage from '../components/pages/LinkPage'
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
@@ -26,11 +27,15 @@ Vue.use(VueRouter)
 // パスとコンポーネントのマッピング
 const routes = [{
   path: '/',
-  components: LinkList
+  component: LinkList
 },
 {
   path: '/Login',
   component: Login
+},
+{
+  path: '/page',
+  component: LinkPage
 }
 ]
 

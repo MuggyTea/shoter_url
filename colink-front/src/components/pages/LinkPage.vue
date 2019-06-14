@@ -1,5 +1,5 @@
 <template>
 <h1>
-    LinkLists
+    LinkPage
 </h1>
 </template>
