@@ -1,13 +1,27 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <header>
+      <Navbar></Navbar>
+    </header>
+    <main>
+      <div class="container">
+        <router-view/>
+      </div>
+    </main>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Navbar,
+    Footer
+  }
 }
 </script>
 
