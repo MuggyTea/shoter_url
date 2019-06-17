@@ -9,9 +9,9 @@ from app.views import create_app, MakeShorterUrl
 app = create_app()
 api = Api(app)
 
-@app.route('/')
-def index():
-    print('index')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
     return render_template('index.html')
 
 # urlとパスの紐付け

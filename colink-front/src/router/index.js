@@ -19,6 +19,7 @@ import VueRouter from 'vue-router'
 import LinkList from '../components/pages/LinkList'
 import Login from '../components/pages/Login'
 import LinkPage from '../components/pages/LinkPage'
+import NotFound from '../components/pages/NotFound'
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
@@ -36,6 +37,10 @@ const routes = [{
 {
   path: '/page',
   component: LinkPage
+},
+{
+  path: '*',
+  component: NotFound
 }
 ]
 
