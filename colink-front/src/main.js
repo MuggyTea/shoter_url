@@ -5,6 +5,8 @@ import Vue from 'vue'
 import App from './components/App'
 // ルーティングの定義をインポートする
 import router from './router'
+// firebase構成をインポートする
+import './plugins/firebase'
 
 Vue.config.productionTip = false
 

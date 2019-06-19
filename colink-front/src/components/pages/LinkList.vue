@@ -8,15 +8,18 @@
                 :key="photo.id"
                 :item="photo"
             />
+            <OneLink></OneLink>
         </div>
     </div>
 </template>
 
 <script>
 import LinkPhoto from './LinkPhoto'
+import OneLink from './OneLink'
 export default {
   components: {
-    LinkPhoto
+    LinkPhoto,
+    OneLink
   },
   data () {
     return {
