@@ -121,3 +121,6 @@ firestore,indexes.json
 firestore.rules
 functions/
 storage.rules
+
+# key settings
+colink-front/src/plugins/firebase.js
