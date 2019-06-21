@@ -1,16 +1,17 @@
 <template>
     <div class="photo">
         <figure class="photo__wrapper">
+            {{ link_list }}
             <img
                 class="photo__image photo__image--portrait"
-                :src="item.url"
-                :alt="'Photo by ${item.owner.name}'"
+                :src="'link_list.link_photo'"
+                :alt="'{{ link_list }}'"
             >
         </figure>
         <router-link
         class="photo_overlay"
-        :to="'/photos/${item.id}'"
-        :title="'View the photo by ${item.owner.name}'"
+        :to="'/${link_list.user_id}/${link_list.create_num}'"
+        :title="'View the photo by ${link_list.user_name}'"
         >
         <div class="photo__controls">
             <button
@@ -26,8 +27,9 @@
 
 <script>
 export default {
-  props: {
-    item: {
+  name: 'LinkPhoto',
+  item: {
+    link_list: {
       type: Object,
       required: true
     }
