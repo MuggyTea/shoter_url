@@ -28,8 +28,8 @@
 <script>
 export default {
   name: 'LinkPhoto',
-  item: {
-    link_list: {
+  props: {
+    linklist: {
       type: Object,
       required: true
     }
