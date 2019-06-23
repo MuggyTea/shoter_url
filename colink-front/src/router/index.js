@@ -20,6 +20,7 @@ import LinkList from '../components/pages/LinkList'
 import Login from '../components/pages/Login'
 import LinkPage from '../components/pages/LinkPage'
 import NotFound from '../components/pages/NotFound'
+import MarkDownPanel from '../components/pages/MarkDownPanel'
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
@@ -41,6 +42,10 @@ const routes = [{
 {
   path: '*',
   component: NotFound
+},
+{
+  path: '/panel',
+  component: MarkDownPanel
 }
 ]
 
