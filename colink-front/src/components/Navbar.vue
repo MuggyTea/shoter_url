@@ -1,7 +1,7 @@
 <template>
     <nav class="nav-wrapper">
         <router-link class="brand-logo" to="/">
-            Co-Links - こりんくす -
+            Co-Links
         </router-link>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">

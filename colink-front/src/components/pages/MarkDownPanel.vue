@@ -33,10 +33,8 @@
         </div>
         <div class="panel-body" v-show="activeTab === 2">
             <MarkdownPreview :linkinfo="this.linkinfo" ></MarkdownPreview>
-            <!-- <markdown-preview :text="urlname"></markdown-preview> -->
         </div>
         <div class="panel-footer">
-            {{ linkinfo }}
             <div class="text-right">
                 <button class="btn btn-primary">Submit</button>
             </div>
@@ -54,11 +52,6 @@ export default {
     MarkdownPreview
   },
   data () {
-    // return {
-    //   activeTab: 1,
-    //   linkurl: '',
-    //   urlname: ''
-    // }
     return {
       activeTab: 1,
       linkinfo: {linkname: '', linkurl: ''}

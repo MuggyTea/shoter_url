@@ -1,6 +1,6 @@
 <template>
     <div class="photo-list">
-        <h1>Link List</h1>
+        <h1>Index</h1>
         <div class="grid">
             <LinkPhoto
                 class="grid__item"
