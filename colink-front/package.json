@@ -14,7 +14,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bootstrap-vue": "^2.0.0-rc.24",
     "vue": "^2.5.2",
+    "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import MarkdownEditor from './MarkDownEditor.vue'
+import MarkdownEditor from './MarkDownEditor'
 import MarkdownPreview from './MarkDownPreview.vue'
 
 export default {
