@@ -28,7 +28,7 @@ export default {
       this.link.platforms = []
       this.link.million = false
       this.link.createAt = new Date()
-      this.$store.dispatch('addLink', this.link)
+      this.$store.dispatch('links/addLink', this.link)
       this.link = this.emptyLink()
     },
     emptyLink () {

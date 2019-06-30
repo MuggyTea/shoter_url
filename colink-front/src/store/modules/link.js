@@ -1,7 +1,7 @@
 import firestore from '../../plugins/firebase'
+import CONSTANS from '../../components/constants'
 /**
- * リンクページ一覧のストアモジュール
- * リンク詳細ページで表示するリンクの配列を管理する
+ * リンクページで表示するリンク一件分のデータを管理する
  */
 
 // DBを呼び出す
@@ -12,8 +12,8 @@ export default {
   unsubscribe: null,
   state () {
     return {
-      // 配列
-      data: []
+      // 一件分なので
+      data: {}
     }
   },
   mutations: {
@@ -23,8 +23,6 @@ export default {
     },
     // リンク追加時
     add (state, payload) {
-      console.log('add')
-      console.log(payload)
       state.data.push(payload)
     },
     // 呼び出すとき
@@ -50,40 +48,29 @@ export default {
   },
   actions: {
     clear ({ commit }) {
-      commit('init', [])
+      commit('init', CONSTANS.NEW_EMPTY_MEMO())
     },
     // リスナーの起動
-    startListener ({ commit }) {
+    startLisener ({ commit }, payload) {
       if (this.unsubscribe) {
         console.warn('listener is already running. ', this.unsubscribe)
         this.unsubscribe()
         this.unsubscribe = null
       }
       // firestoreからデータを検索する
-      this.unsubscribe = LinkRef.orderBy('createAt', 'asc').onSnapshot(querySnapshot => {
+      this.unsubscribe = LinkRef.doc(payload.id).onSnapshot(doc => {
+        console.log('link.js')
+        console.log(doc)
         // データが更新されるたびに呼び出される
-        querySnapshot.docChanges().forEach(change => {
-          console.log('links.js')
-          console.log(change.doc)
-          const payload = {
-            id: change.doc.id,
-            link_title: change.doc.data().link_title,
-            description: change.doc.data().description,
-            platforms: change.doc.data().platforms,
-            million: change.doc.data().million,
-            createAt: new Date(change.doc.data().createAt.seconds * 100),
-            photo: change.doc.data().photo
-          }
-          // ミューテーションを通してステートを更新する
-          if (change.type === 'added') {
-            commit('add', payload)
-          } else if (change.type === 'modified') {} else if (change.type === 'removed') {
-            commit('remove', payload)
-          }
+        commit('init', {
+          id: doc.id,
+          link_title: doc.data().link_title,
+          description: doc.data().description,
+          platforms: doc.data().platforms,
+          million: doc.data().million,
+          createAt: new Date(doc.data().createAt.seconds * 100),
+          photo: doc.data().photo
         })
-      },
-      (error) => {
-        console.error(error.name)
       })
     },
     // リスナーの停止
@@ -94,22 +81,29 @@ export default {
         this.unsubscribe = null
       }
     },
-    addLink ({ commit }, payload) {
-      LinkRef.add(payload)
-        .then(doc => {
-          // ミューテーションの外でステート管理しない
-        })
-        .catch(err => {
-          console.error('Error adding document: ', err)
-        })
-    },
-    deleteLink ({ commit }, payload) {
-      LinkRef.doc(payload.id).delete()
+    updateMillion ({ state }) {
+      const million = !state.data.million
+      LinkRef.doc(state.data.id).update({ million: million })
         .then(() => {
 
         })
         .catch(err => {
-          console.error('Error removing document: ', err)
+          console.err('Error updateing document: ', err)
+        })
+    },
+    updatePlatforms ({ state }, payload) {
+      const platforms = [].concat(state.data.platforms)
+      if (platforms.includes(payload.platforms)) {
+        platforms.splice(platforms.indexOf(payload.platforms), 1)
+      } else {
+        platforms.push(payload.platform)
+      }
+      LinkRef.doc(state.data.id).update({ platforms: platforms })
+        .then(() => {
+
+        })
+        .catch(err => {
+          console.error('Error updating document: ', err)
         })
     }
   }

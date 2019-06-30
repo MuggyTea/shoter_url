@@ -35,7 +35,6 @@
 <script>
 import LinkPhoto from '../LinkPhoto'
 import OneLink from '../OneLink'
-import { db } from '../../plugins/firebase.js'
 import LinkListCard from '../LinkListCard'
 import LinkListForm from '../LinkListForm'
 
@@ -58,9 +57,23 @@ export default {
 
     }
   },
+  mounted () {
+    this.init()
+    this.start()
+  },
+  destroyed () {
+    this.stop()
+  },
   methods: {
-    search () {
+    init () {
       console.log('メモを検索する')
+      this.$store.dispatch('links/clear')
+    },
+    start () {
+      this.$store.dispatch('links/startListener')
+    },
+    stop () {
+      this.$store.dispatch('links/stopListener')
     },
     remove (id) {
       console.log(this.$store.dispatch('links/deleteLink', {id}))
@@ -73,13 +86,8 @@ export default {
   computed: {
     links () {
       console.log('getter')
-      console.log(this.$store.getters['links'])
-      return this.$store.getters['links']
-    }
-  },
-  firestore () {
-    return {
-      link_lists: db.collection('LinkList')
+      console.log(this.$store.getters['links/data'])
+      return this.$store.getters['links/data']
     }
   }
 }

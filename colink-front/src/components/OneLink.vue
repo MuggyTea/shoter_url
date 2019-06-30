@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { db } from '../plugins/firebase'
+import firestore from '../plugins/firebase'
 
 export default {
   name: 'OneLink',
@@ -24,7 +24,7 @@ export default {
   }),
   firestore () {
     return {
-      link_pages: db.collection('LinkPage')
+      link_pages: firestore.collection('LinkPage')
     }
   }
 }

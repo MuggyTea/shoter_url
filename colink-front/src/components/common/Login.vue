@@ -67,7 +67,7 @@
 <script>
 // firebase構成をインポートする
 import firebase from 'firebase'
-import { db } from '../../plugins/firebase'
+import firestore from '../../plugins/firebase'
 
 export default {
   name: 'Login',
@@ -117,7 +117,7 @@ export default {
           console.log(result.user)
           // ステータスがチェンジされたら、ユーザー情報をfirestoreに登録
           // ユーザーが重複しないようにする
-          db.collection('Users').doc(this.userUid).set({
+          firestore.collection('Users').doc(this.userUid).set({
             userName: this.user.displayName,
             userPic: this.user.photoURL,
             userEmail: this.user.email,
@@ -163,7 +163,7 @@ export default {
     },
     firestore () {
       return {
-        userinfo: db.collection('Users').doc(this.userUid)
+        userinfo: firestore.collection('Users').doc(this.userUid)
       }
     }
   }
