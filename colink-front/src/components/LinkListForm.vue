@@ -25,10 +25,16 @@ export default {
       if (!this.link.link_title || !this.link.description) {
         return
       }
+      console.log('add new Link')
+      console.log(new Date())
+      //   console.log(this.emptyLink())
       this.link.platforms = []
       this.link.million = false
       this.link.createAt = new Date()
+      console.log(this.link)
+      // ステートを変更
       this.$store.dispatch('links/addLink', this.link)
+      // 空に戻す
       this.link = this.emptyLink()
     },
     emptyLink () {

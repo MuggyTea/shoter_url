@@ -1,20 +1,20 @@
 export default {
   ERROR_MEMO: {
-    id: -1,
+    link_id: -1,
     title: 'unknown',
     description: 'unknown',
     platforms: [],
     million: false,
-    releasedAt: null
+    createAt: null
   },
   NEW_EMPTY_MEMO () {
     return {
-      id: 0,
+      link_id: null,
       title: '',
       description: '',
       platforms: [],
       million: false,
-      releasedAt: null
+      createAt: null
     }
   },
   PLATFORMS: ['FC', 'SFC', 'GB', '64', 'GC', 'DS', 'Wii', '3DS', 'Wii U', 'Switch']

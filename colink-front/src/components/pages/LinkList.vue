@@ -86,7 +86,7 @@ export default {
   computed: {
     links () {
       console.log('getter')
-      console.log(this.$store.getters['links/data'])
+      // console.log(this.$store.getters['links/data'])
       return this.$store.getters['links/data']
     }
   }

@@ -1,4 +1,5 @@
 import firestore from '../../plugins/firebase'
+import { ADD, REMOVE } from './mutation-types'
 /**
  * リンクページ一覧のストアモジュール
  * リンク詳細ページで表示するリンクの配列を管理する
@@ -13,7 +14,8 @@ export default {
   state () {
     return {
       // 配列
-      data: []
+      data: [],
+      link_id: 0
     }
   },
   mutations: {
@@ -22,20 +24,28 @@ export default {
       state.data = payload
     },
     // リンク追加時
-    add (state, payload) {
+    [ADD] (state, payload) {
       console.log('add')
-      console.log(payload)
+      // DBから受け取ったデータをステートにセット
       state.data.push(payload)
+    },
+    addlink (state, payload) {
+      console.log('mutations add link')
+      console.log(state.data[0])
+      payload.link_id = state.link_id
+      // link_idを更新
+      payload.link_id++
     },
     // 呼び出すとき
     set (state, payload) {
-      const index = state.data.findIndex(link => link.id === payload.id)
+      const index = state.data.findIndex(link => link.link_id === payload.link_id)
       if (index !== -1) {
         state.data[index] = payload
+        state.data.push(payload)
       }
     },
     // 削除時
-    remove (state, payload) {
+    [REMOVE] (state, payload) {
       const index = state.data.findIndex(link => link.id === payload.id)
       if (index !== -1) {
         state.data.splice(index, 1)
@@ -64,21 +74,28 @@ export default {
         // データが更新されるたびに呼び出される
         querySnapshot.docChanges().forEach(change => {
           console.log('links.js')
-          console.log(change.doc)
+          console.log(change.doc.data())
+          // 時刻がnullのものは表示しない
+          if (!change.doc.data().createAt) {
+            console.log(change.doc.data())
+            return
+          }
           const payload = {
             id: change.doc.id,
+            link_id: change.doc.data().link_id,
             link_title: change.doc.data().link_title,
             description: change.doc.data().description,
             platforms: change.doc.data().platforms,
             million: change.doc.data().million,
-            createAt: new Date(change.doc.data().createAt.seconds * 100),
+            createAt: new Date(change.doc.data().createAt.seconds * 1000),
             photo: change.doc.data().photo
           }
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
-            commit('add', payload)
+            console.log('change.type add', change.type)
+            commit(ADD, payload)
           } else if (change.type === 'modified') {} else if (change.type === 'removed') {
-            commit('remove', payload)
+            commit('REMOVE', payload)
           }
         })
       },
@@ -95,6 +112,9 @@ export default {
       }
     },
     addLink ({ commit }, payload) {
+      console.log('addLink now')
+      console.log(payload)
+      commit('addlink', payload)
       LinkRef.add(payload)
         .then(doc => {
           // ミューテーションの外でステート管理しない
