@@ -9,7 +9,7 @@ export default {
   },
   NEW_EMPTY_MEMO () {
     return {
-      link_id: null,
+      create_num: null,
       title: '',
       description: '',
       platforms: [],

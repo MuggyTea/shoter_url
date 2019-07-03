@@ -23,7 +23,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/page',
+    path: '/page/:link_id',
     name: 'LinkPage',
     component: LinkPage,
     props: true, // データの受け渡しを可能にする

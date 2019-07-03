@@ -14,8 +14,8 @@ export default {
   state () {
     return {
       // 配列
-      data: [],
-      link_id: 0
+      data: []
+      //   create_num: 0
     }
   },
   mutations: {
@@ -29,16 +29,9 @@ export default {
       // DBから受け取ったデータをステートにセット
       state.data.push(payload)
     },
-    addlink (state, payload) {
-      console.log('mutations add link')
-      console.log(state.data[0])
-      payload.link_id = state.link_id
-      // link_idを更新
-      payload.link_id++
-    },
     // 呼び出すとき
     set (state, payload) {
-      const index = state.data.findIndex(link => link.link_id === payload.link_id)
+      const index = state.data.findIndex(link => link.id === payload.id)
       if (index !== -1) {
         state.data[index] = payload
         state.data.push(payload)
@@ -82,7 +75,8 @@ export default {
           }
           const payload = {
             id: change.doc.id,
-            link_id: change.doc.data().link_id,
+            link_id: (change.doc.id).substr(0, 4),
+            create_num: change.doc.data().create_num,
             link_title: change.doc.data().link_title,
             description: change.doc.data().description,
             platforms: change.doc.data().platforms,
@@ -90,6 +84,7 @@ export default {
             createAt: new Date(change.doc.data().createAt.seconds * 1000),
             photo: change.doc.data().photo
           }
+          console.log(payload)
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
             console.log('change.type add', change.type)
@@ -105,7 +100,7 @@ export default {
     },
     // リスナーの停止
     stopListener () {
-      if (this.clear.unsubscribe) {
+      if (this.unsubscribe) {
         console.log('listener is stopping ', this.unsubscribe)
         this.unsubscribe()
         this.unsubscribe = null
@@ -113,8 +108,6 @@ export default {
     },
     addLink ({ commit }, payload) {
       console.log('addLink now')
-      console.log(payload)
-      commit('addlink', payload)
       LinkRef.add(payload)
         .then(doc => {
           // ミューテーションの外でステート管理しない

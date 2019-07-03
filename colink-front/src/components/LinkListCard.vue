@@ -2,8 +2,8 @@
     <div class="card p-2 md-2 float-lg-left" style="width: 18rem;" v-bind:class="{ 'border-primary': !link.million, 'border-success': link.million}">
     <div class="card-header text-left">
         <router-link
-            v-bind:to="{name: 'LinkPageDetails',
-            params: {id: link.id} }">
+            v-bind:to="{name: 'LinkPage',
+            params: {link_id: link.link_id, id: link.id} }">
             {{ formatedTitle }}
         </router-link>
     </div>

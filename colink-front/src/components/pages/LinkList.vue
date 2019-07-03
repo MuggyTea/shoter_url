@@ -45,12 +45,12 @@ export default {
     'link-list-card': LinkListCard,
     'link-list-form': LinkListForm
   },
-  props: {
-    link_lists: {
-      type: Object,
-      required: true
-    }
-  },
+  // props: {
+  //   link_lists: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // },
   data () {
     return {
 
