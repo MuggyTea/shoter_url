@@ -13,9 +13,8 @@
 
         <div class="row">
           <button class="btn-sm btn-dark m-1"
-          v-for="{link, index} in links"
+          v-for="(link, index) in links"
           v-bind:key="index"
-          v-bind:link="link"
           v-on:click="remove(link.id)">
           {{ index }}
           </button>
