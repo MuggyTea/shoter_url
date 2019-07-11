@@ -63,22 +63,42 @@ export default {
       // firestoreからデータを検索する
       console.log(payload)
       console.log(payload.id)
+      console.log(payload.link_id)
       console.log('link.jsssss')
-      this.unsubscribe = LinkRef.doc(payload.id).onSnapshot(doc => {
-        console.log('link.js')
-        console.log(doc)
-        // データが更新されるたびに呼び出される
-        commit('init', {
-          id: doc.id,
-          link_id: (doc.id).substr(0, 4),
-          create_num: doc.data().create_num,
-          link_title: doc.data().link_title,
-          description: doc.data().description,
-          platforms: doc.data().platforms,
-          million: doc.data().million,
-          createAt: new Date(doc.data().createAt.seconds * 1000),
-          photo: doc.data().photo
+      this.unsubscribe = LinkRef.where('link_id', '==', payload.link_id).onSnapshot(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          console.log('link.js')
+          // データが更新されるたびに呼び出される
+          commit('init', {
+            id: doc.id,
+            link_id: doc.data().link_id,
+            create_num: doc.data().create_num,
+            link_title: doc.data().link_title,
+            description: doc.data().description,
+            platforms: doc.data().platforms,
+            million: doc.data().million,
+            createAt: new Date(doc.data().createAt.seconds * 1000),
+            photo: doc.data().photo
+          })
         })
+        // doc => {
+        //   console.log('link.js')
+        //   console.log(doc.docs.map)
+        //   console.log(doc.docs.keys())
+        //   console.log(doc.docs.link_id)
+        //   // データが更新されるたびに呼び出される
+        //   commit('init', {
+        //     id: doc.id,
+        //     link_id: doc.data().link_id,
+        //     create_num: doc.data().create_num,
+        //     link_title: doc.data().link_title,
+        //     description: doc.data().description,
+        //     platforms: doc.data().platforms,
+        //     million: doc.data().million,
+        //     createAt: new Date(doc.data().createAt.seconds * 1000),
+        //     photo: doc.data().photo
+        //   })
+        // }
       })
     },
     // リスナーの停止

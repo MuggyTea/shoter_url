@@ -29,6 +29,10 @@ export default {
       // DBから受け取ったデータをステートにセット
       state.data.push(payload)
     },
+    add_linkid (state, payload) {
+      console.log('add link_id')
+      // link_idを追加で更新する
+    },
     // 呼び出すとき
     set (state, payload) {
       const index = state.data.findIndex(link => link.id === payload.id)
@@ -84,6 +88,10 @@ export default {
             createAt: new Date(change.doc.data().createAt.seconds * 1000),
             photo: change.doc.data().photo
           }
+          console.log('add link_id')
+          LinkRef.doc(change.doc.id).update({
+            'link_id': payload.link_id
+          })
           console.log(payload)
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {

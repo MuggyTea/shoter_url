@@ -30,7 +30,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <!-- この下の行に mr-auto クラスを付与するだけ -->
+        <!-- 左寄せのためこの下の行に mr-auto クラスを付与する -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link" href="#">Home</a>
