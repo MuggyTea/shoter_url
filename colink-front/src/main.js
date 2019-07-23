@@ -1,6 +1,8 @@
+import '@babel/polyfill'
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import './plugins/vuetify'
 // ルートコンポーネントをインポートする
 import App from './App'
 // ルーティングの定義をインポートする
@@ -13,12 +15,13 @@ import store from './store'
 // import '../static/js/bootstrap'
 // CSS有効化
 import moment from 'vue-moment'
-import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min'
 
 Vue.use(moment)
-Vue.use(BootstrapVue)
+Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 
