@@ -7,6 +7,7 @@
       <p class="header__user-name">
         {{ userName }}
         {{ user }}
+        {{ userinfo }}
       </p>
     </template>
     <div class="isAuthButtonText">
@@ -34,8 +35,17 @@ export default {
       userUid: null,
       isSignedIn: null,
       // ログイン/ ログアウト確認
-      isAuth: true,
-      userInfo: null
+      isAuth: true
+    }
+  },
+  // computedには結果がキャッシュされる
+  // getterには引数は渡せない
+  // ゲッター
+  computed: {
+    userinfo () {
+      console.log('getter')
+      console.log(this.$store.getters['auth/data'])
+      return this.$store.getters['auth/data']
     }
   },
   mounted: function () {
@@ -57,22 +67,11 @@ export default {
   },
   methods: {
     signIn: function () {
-      const provider = new firebase.auth.TwitterAuthProvider()
-      firebase.auth().signInWithPopup(provider)
-        .then((userCredential) => {
-          console.log(userCredential.additionalUserInfo)
-          console.log(userCredential.additionalUserInfo.username)
-          this.userInfo = userCredential.additionalUserInfo.profile
-          this.RegistToDB(this.userInfo)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      this.$store.dispatch('auth/login')
     },
     signOut: function () {
-      firebase.auth().signOut().then(() => {
-        this.$router.push('/')
-      })
+      this.$store.dispatch('auth/logout')
+      this.$router.push('/')
     },
     RegistToDB: function (userInfo) {
       console.log('regist firestore')
