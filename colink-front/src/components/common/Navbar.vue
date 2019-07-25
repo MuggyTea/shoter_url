@@ -12,13 +12,9 @@
       <v-icon>refresh</v-icon>
     </v-btn>-->
     <v-toolbar-items>
-      <v-flex md4 text-md-center align-self-center>
-        <div>
-          <v-btn color="teal darken-4">
-            <router-link class="white--text" to="/page">Create Links page</router-link>
-          </v-btn>
-        </div>
-      </v-flex>
+      <v-btn color="teal darken-4">
+        <router-link class="white--text" to="/page">Create Links page</router-link>
+      </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>

@@ -19,7 +19,7 @@ const routes = [
   //   component: LinkList
   // },
   {
-    path: '/Login',
+    path: '/login',
     component: Login
   },
   {

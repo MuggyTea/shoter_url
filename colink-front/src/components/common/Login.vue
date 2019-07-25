@@ -27,41 +27,28 @@
 </template>
 -->
 <template>
-    <div class="login__auth">
-        <template
-            v-if="isAuth && userName && userPic"
-        >
-            <div class="header__user-image">
-                <img :src="userPic">
-            </div>
-            <p class="header__user-name">
-                {{ userinfo }}
-                {{ userinfo.userName }}
-            </p>
-        </template>
-        <div class='isAuthButtonText'>
-        <button
-            v-if="isAuth"
-            class="header__auth-button"
-            @click="signOut"
-        >
-        Sign-Out
-        </button>
-        <button
-            v-else
-            class="header__auth-button"
-            @click="signInandRegistar"
-        >
-        Sign-in with Google
-        </button>
-        </div>
-<!--
+  <div class="login__auth">
+    <template v-if="isAuth && userName && userPic">
+      <div class="header__user-image">
+        <img :src="userPic" />
+      </div>
+      <p class="header__user-name">
+        {{ userName }}
+        {{ user }}
+        {{ userInfo }}
+      </p>
+    </template>
+    <div class="isAuthButtonText">
+      <button v-if="isAuth" class="header__auth-button" @click="signOut">Sign-Out</button>
+      <button v-else class="header__auth-button" @click="signIn">Sign-in with Twitter</button>
+    </div>
+    <!--
         <router-view
             :isAuth="isAuth"
             :userName="userName"
             :userPic="userPic"
-        ></router-view> -->
-    </div>
+    ></router-view>-->
+  </div>
 </template>
 
 <script>
@@ -81,12 +68,16 @@ export default {
       userUid: null,
       isSignedIn: null,
       // ログイン/ ログアウト確認
-      isAuth: true
+      isAuth: true,
+      userInfo: null
     }
   },
   mounted: function () {
     firebase.auth().onAuthStateChanged(
       user => {
+        console.log('ログイン確認')
+        console.log(this.user)
+        this.user = user || {}
         this.isAuth = !!user
         this.userName = user
           ? this.user.displayName : null
@@ -99,6 +90,9 @@ export default {
         this.userUid = user
           ? this.user.uid : null
       })
+    console.log('ユーザー確認')
+    this.firestore()
+    console.log(this.userInfo)
   },
   methods: {
     signInandRegistar: function () {
@@ -106,64 +100,49 @@ export default {
       this.RegistToDB()
     },
     signIn: function () {
-      const provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithRedirect(provider)
-      // ログイン後にDBに登録する
-      firebase.auth().getRedirectResult().then(function (result) {
-        if (result.credential) {
-          console.log('regist firestore')
-          console.log(result)
-          console.log(result.credential)
-          console.log(result.user)
-          // ステータスがチェンジされたら、ユーザー情報をfirestoreに登録
-          // ユーザーが重複しないようにする
-          firestore.collection('Users').doc(this.userUid).set({
-            userName: this.user.displayName,
-            userPic: this.user.photoURL,
-            userEmail: this.user.email,
-            userUid: this.user.uid
-          })
-            .then(function (userUid) {
-              console.log('Document written with ID: ', userUid)
-            })
-            .catch(function (error) {
-              console.log('Error adding document: ', error)
-            })
-        }
-      }).catch(function (error) {
-        console.log(error.code)
-        console.log(error.message)
-        console.log(error.email)
-        console.log(error.credential)
-      })
+      const provider = new firebase.auth.TwitterAuthProvider()
+      firebase.auth().signInWithPopup(provider)
+        .then((userCredential) => {
+          console.log(userCredential.additionalUserInfo)
+          console.log(userCredential.additionalUserInfo.username)
+          this.userInfo = userCredential.additionalUserInfo.profile
+          this.RegistToDB(this.userInfo)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     signOut: function () {
       firebase.auth().signOut().then(() => {
         this.$router.push('/')
       })
     },
-    RegistToDB: function () {
-    //   console.log(this.userUid)
-
-    //   console.log('regist firestore')
-    //   // ステータスがチェンジされたら、ユーザー情報をfirestoreに登録
-    //   // ユーザーが重複しないようにする
-    //   db.collection('Users').doc(this.userUid).set({
-    //     userName: this.user.displayName,
-    //     userPic: this.user.photoURL,
-    //     userEmail: this.user.email,
-    //     userUid: this.user.uid
-    //   })
-    //     .then(function (userUid) {
-    //       console.log('Document written with ID: ', userUid)
-    //     })
-    //     .catch(function (error) {
-    //       console.log('Error adding document: ', error)
-    //     })
+    RegistToDB: function (userInfo) {
+      console.log('regist firestore')
+      console.log(this.userUid)
+      console.log(this.user.uid)
+      this.user = firebase.auth().currentUser
+      console.log(userInfo)
+      // ステータスがチェンジされたら、ユーザー情報をfirestoreに登録
+      // ユーザーが重複しないようにする
+      firestore.collection('Users').doc(this.user.uid).set({
+        userName: this.user.displayName,
+        userPic: this.user.photoURL,
+        userEmail: this.user.email,
+        userUid: this.user.uid,
+        userId: userInfo.screen_name,
+        userDescription: userInfo.description
+      })
+        .then(function (userUid) {
+          console.log('Document written with ID: ', this.userUid)
+        })
+        .catch(function (error) {
+          console.log('Error adding document: ', error)
+        })
     },
     firestore () {
       return {
-        userinfo: firestore.collection('Users').doc(this.userUid)
+        userInfo: firestore.collection('Users').doc(this.user.uid)
       }
     }
   }
