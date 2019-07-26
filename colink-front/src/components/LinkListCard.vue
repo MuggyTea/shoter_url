@@ -1,33 +1,37 @@
 <template>
-    <div class="card p-2 md-2 float-lg-left" style="width: 18rem;" v-bind:class="{ 'border-primary': !link.million, 'border-success': link.million}">
-    <div class="card-header text-left">
-        <router-link
-            v-bind:to="{name: 'LinkPage',
-            params: {link_id: link.link_id, id: link.id} }">
-            {{ formatedTitle }}
-        </router-link>
-    </div>
-    <div class="card-body text-left" v-bind:class="{'text-primary': !link.million, 'text-success': link.million}">
-        <span
-        class="badge badge-info"
-        style="margin-left: 2px;"
-        v-for="(platform, index) in link.platforms"
-        v-bind:key="index">
-        </span>
-        <span class="card-text">
-            {{ formatedDescription }}
-        </span>
-    </div>
-    <div class="card-footer text-right">
-        <small class="text-muted">create at</small>
-        <span>{{ releasedAtFromNow }}</span>
-        <span
-        class="badge badge-success"
-        v-show="link.million"
-        >million
-        </span>
-    </div>
-</div>
+  <v-card>
+    <v-container fill-height fluid pa-2>
+      <v-layout align-center fill-height>
+        <v-flex align-end xs12 flexbox>
+          <v-img :src="link.src" max-height="100px"></v-img>
+          <v-card-title primary-title>
+            <div>
+              <router-link
+                v-bind:to="{name: 'LinkPage',
+            params: {link_id: link.link_id, id: link.id} }"
+              >
+                <div color class="headline">{{ formatedTitle }}</div>
+              </router-link>
+              <span class="grey--text">{{ formatedDescription }}</span>
+            </div>
+          </v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn flat>
+              <small class="text-muted">create at</small>
+              <span>{{ releasedAtFromNow }}</span>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>favorite</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>share</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card>
 </template>
 
 <script>

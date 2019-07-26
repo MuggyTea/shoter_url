@@ -28,3 +28,12 @@ export default {
   }
 }
 </script>
+
+<style>
+a:hover {
+  text-decoration: none;
+}
+a {
+  color: #e8eaf6 !important;
+}
+</style>

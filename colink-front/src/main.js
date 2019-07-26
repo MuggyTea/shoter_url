@@ -17,11 +17,8 @@ import store from './store'
 import moment from 'vue-moment'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min'
 
 Vue.use(moment)
-Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 
