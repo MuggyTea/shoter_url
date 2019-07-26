@@ -8,13 +8,23 @@
       <v-spacer></v-spacer>
       <!-- <v-btn icon>
       <v-icon>search</v-icon>
-    </v-btn>
-    <v-btn icon>
-      <v-icon>refresh</v-icon>
       </v-btn>-->
+      <v-btn>
+        <Login />
+      </v-btn>
       <v-toolbar-items>
         <v-btn outline to="/page">Create your page</v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </v-card>
 </template>
+<script>
+import Login from './Login'
+
+export default {
+  name: 'Navbar',
+  components: {
+    Login
+  }
+}
+</script>

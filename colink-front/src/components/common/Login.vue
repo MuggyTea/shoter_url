@@ -1,6 +1,6 @@
 <template>
   <div class="login__auth">
-    <template v-if="isAuth && userName && userPic">
+    <!-- <template v-if="isAuth && userName && userPic">
       <div class="header__user-image">
         <img :src="userPic" />
       </div>
@@ -9,7 +9,7 @@
         {{ user }}
         {{ userinfo }}
       </p>
-    </template>
+    </template>-->
     <div class="isAuthButtonText">
       <button v-if="isAuth" class="header__auth-button" @click="signOut">Sign-Out</button>
       <button v-else class="header__auth-button" @click="signIn">Sign-in with Twitter</button>
