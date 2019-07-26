@@ -1,7 +1,6 @@
 <template>
   <v-card flat tile>
     <v-toolbar color="primary">
-      <v-toolbar-side-icon></v-toolbar-side-icon>
       <router-link to="/">
         <v-toolbar-title>Co-Links</v-toolbar-title>
       </router-link>

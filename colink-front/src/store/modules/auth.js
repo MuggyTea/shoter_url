@@ -19,19 +19,25 @@ const getters = {
 
 const mutations = {
   setUser (state, user) {
+    console.log('setUser')
+    console.log(user)
     state.user = user
+    console.log(state.user)
   }
 }
 
 const actions = {
-  login (context, data) {
+  login (context) {
     console.log('user login now')
     // twitterログイン
     const provider = new firebase.auth.TwitterAuthProvider()
     firebase.auth().signInWithPopup(provider)
       .then((userCredential) => {
+        // ユーザー情報を取り出す
         const userInfo = userCredential.additionalUserInfo.profile
+        // ミューテーションを呼び出す
         context.commit('setUser', userInfo)
+        // firestoreに送る
         User.where('id_str', '==', userInfo.id_str).get()
           .then(function (docs) {
             // 新規ユーザーだったらDBに登録
