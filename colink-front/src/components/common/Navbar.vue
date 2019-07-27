@@ -9,11 +9,10 @@
       <v-icon>search</v-icon>
       </v-btn>-->
       <v-toolbar-items>
-        <div v-if="isLogin" class="navbar__item"></div>
-        <span v-if="isLogin" class="navbar__item"></span>
-        <div v-else class="navbar__item">{{ isLogin }}</div>
-        <Login />
-        <v-btn outline to="/page">Create your page</v-btn>
+        <!-- <Login /> -->
+        <!-- <v-btn outline to="/page">Create page</v-btn> -->
+        <v-btn outline v-if="isLogin" to="/page">Create page</v-btn>
+        <v-btn dark v-else @click="signIn" color="#2196F3">Twitter Login</v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </v-card>
@@ -25,6 +24,11 @@ export default {
   name: 'Navbar',
   components: {
     Login
+  },
+  methods: {
+    signIn: async function () {
+      await this.$store.dispatch('auth/login')
+    }
   },
   computed: {
     isLogin () {

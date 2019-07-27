@@ -4,6 +4,7 @@
       <Navbar />
       <RouterView />
     </v-content>
+    <Footer />
   </v-app>
 </template>
 
@@ -38,6 +39,6 @@ a {
 }
 .container {
   /* display: flex; */
-  margin: auto;
+  /* margin: auto; */
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-    <footer class="footer">
-        <Login></Login>
-    </footer>
+  <footer class="footer">
+    <Login />
+  </footer>
 </template>
 
 <script>

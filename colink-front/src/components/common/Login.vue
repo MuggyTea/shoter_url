@@ -11,7 +11,7 @@
       </p>
     </template>-->
     <v-btn v-if="isAuth" @click="signOut">Sign-Out</v-btn>
-    <v-btn v-else @click="signIn">Sign-in with Twitter</v-btn>
+    <v-btn v-else @click="signIn">Twitter Login</v-btn>
   </div>
   <!-- <router-view :isAuth="isAuth" :userName="userName" :userPic="userPic"></router-view> -->
 </template>
@@ -19,7 +19,6 @@
 <script>
 // firebase構成をインポートする
 import firebase from 'firebase'
-import firestore from '../../plugins/firebase'
 import Navbar from './Navbar'
 
 export default {
@@ -41,14 +40,13 @@ export default {
     }
   },
   // computedには結果がキャッシュされる
-  // getterには引数は渡せない
-  // ゲッター
   computed: {
-    // userinfo () {
-    //   console.log('getter')
-    //   console.log(this.$store.getters['auth/data'])
-    //   return this.$store.getters['auth/data']
-    // }
+    isLogin () {
+      return this.$store.getters['auth/check']
+    },
+    userinfo () {
+      return this.$store.getters['auth/user']
+    }
   },
   mounted: function () {
     firebase.auth().onAuthStateChanged(
@@ -68,40 +66,12 @@ export default {
       })
   },
   methods: {
-    signIn: function () {
-      this.$store.dispatch('auth/login')
+    signIn: async function () {
+      await this.$store.dispatch('auth/login')
     },
     signOut: function () {
       this.$store.dispatch('auth/logout')
       this.$router.push('/')
-    },
-    RegistToDB: function (userInfo) {
-      console.log('regist firestore')
-      console.log(this.userUid)
-      console.log(this.user.uid)
-      this.user = firebase.auth().currentUser
-      console.log(userInfo)
-      // ステータスがチェンジされたら、ユーザー情報をfirestoreに登録
-      // ユーザーが重複しないようにする
-      firestore.collection('Users').doc(this.user.uid).set({
-        userName: this.user.displayName,
-        userPic: this.user.photoURL,
-        userEmail: this.user.email,
-        userUid: this.user.uid,
-        userId: userInfo.screen_name,
-        userDescription: userInfo.description
-      })
-        .then(function (userUid) {
-          console.log('Document written with ID: ', this.userUid)
-        })
-        .catch(function (error) {
-          console.log('Error adding document: ', error)
-        })
-    },
-    firestore () {
-      return {
-        userInfo: firestore.collection('Users').doc(this.user.uid)
-      }
     }
   }
 }
