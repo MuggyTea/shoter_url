@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// import firebase from 'firebase'
+// // 状態管理のストアをインポートする
+// import store from '../store'
 
 // ページコンポーネントのインポート
 import LinkList from '../components/pages/LinkList'

@@ -17,17 +17,29 @@ import store from './store'
 import moment from 'vue-moment'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import firebase from 'firebase'
 
 Vue.use(moment)
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  // 他のコンポーネトから、this.$routerやthis.$storeという方法でルーターや洗濯したパラメータの情報にアクセスできる
-  'router': router,
-  'store': store,
-  components: { App },
-  template: '<App/>'
-})
+const createApp = async () => {
+  await firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log(user)
+      store.dispatch('auth/currentUser', user)
+    } else {
+      store.dispatch('auth/currentUser', null)
+    }
+  })
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    // 他のコンポーネトから、this.$routerやthis.$storeという方法でルーターや洗濯したパラメータの情報にアクセスできる
+    'router': router,
+    'store': store,
+    components: { App },
+    template: '<App/>'
+  })
+}
+createApp()

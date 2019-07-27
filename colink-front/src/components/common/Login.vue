@@ -10,10 +10,8 @@
         {{ userinfo }}
       </p>
     </template>-->
-    <div class="isAuthButtonText">
-      <button v-if="isAuth" class="header__auth-button" @click="signOut">Sign-Out</button>
-      <button v-else class="header__auth-button" @click="signIn">Sign-in with Twitter</button>
-    </div>
+    <v-btn v-if="isAuth" @click="signOut">Sign-Out</v-btn>
+    <v-btn v-else @click="signIn">Sign-in with Twitter</v-btn>
   </div>
   <!-- <router-view :isAuth="isAuth" :userName="userName" :userPic="userPic"></router-view> -->
 </template>
@@ -22,9 +20,13 @@
 // firebase構成をインポートする
 import firebase from 'firebase'
 import firestore from '../../plugins/firebase'
+import Navbar from './Navbar'
 
 export default {
   name: 'Login',
+  components: {
+    Navbar
+  },
   data: function () {
     return {
       user: firebase.auth().currentUser,
@@ -42,11 +44,11 @@ export default {
   // getterには引数は渡せない
   // ゲッター
   computed: {
-    userinfo () {
-      console.log('getter')
-      console.log(this.$store.getters['auth/data'])
-      return this.$store.getters['auth/data']
-    }
+    // userinfo () {
+    //   console.log('getter')
+    //   console.log(this.$store.getters['auth/data'])
+    //   return this.$store.getters['auth/data']
+    // }
   },
   mounted: function () {
     firebase.auth().onAuthStateChanged(
