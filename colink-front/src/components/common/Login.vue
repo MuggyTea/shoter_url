@@ -10,8 +10,8 @@
         {{ userinfo }}
       </p>
     </template>-->
-    <v-btn v-if="isAuth" @click="signOut">Sign-Out</v-btn>
-    <v-btn v-else @click="signIn">Twitter Login</v-btn>
+    <v-btn dark color="#2196F3" v-if="isLogin" @click="signOut">Sign-Out</v-btn>
+    <v-btn dark color="#2196F3" v-else @click="signIn">Twitter Login</v-btn>
   </div>
   <!-- <router-view :isAuth="isAuth" :userName="userName" :userPic="userPic"></router-view> -->
 </template>
