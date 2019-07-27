@@ -2,17 +2,17 @@
   <div class="link-list">
     <v-card>
       <v-container fluid grid-list-md>
-        <v-laylout row wrap>
+        <v-layout row wrap>
           <!-- <h1>Index</h1> -->
           <div class="row justify-content-center">
             <!-- {{ links }} -->
             <link-list-card v-for="(link, index) in links" v-bind:key="index" v-bind:link="link"></link-list-card>
             <link-list-form></link-list-form>
           </div>
-        </v-laylout>
+        </v-layout>
       </v-container>
     </v-card>
-    <div class="row">
+    <div class="row__test__delete">
       <button
         class="btn-sm btn-dark m-1"
         v-for="(link, index) in links"
@@ -93,7 +93,11 @@ export default {
 }
 </script>
 <style>
-.link-list {
+/* .link-list {
+  margin: auto;
+} */
+
+.row__test__delete {
   margin: auto;
 }
 </style>
