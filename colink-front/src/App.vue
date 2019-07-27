@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Navbar />
     <v-content class="container">
+      <Navbar />
       <RouterView />
     </v-content>
   </v-app>
@@ -35,5 +35,9 @@ a:hover {
 }
 a {
   color: #e8eaf6 !important;
+}
+.container {
+  /* display: flex; */
+  margin: auto;
 }
 </style>
