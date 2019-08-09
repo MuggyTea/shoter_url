@@ -46,16 +46,20 @@ export default {
     'link-list-card': LinkListCard,
     'link-list-form': LinkListForm
   },
-  // props: {
-  //   link_lists: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
   data () {
     return {
-
+      user_id: this.userinfo
     }
+  },
+  props: [
+    'screenName'
+  ],
+  // pathの:idを直接書き換えた時の対応
+  beforeRouteUpdate (to, from, next) {
+    // 動的セグメントが変わった場合は、コールバック関数でtargetIdを更新する
+    console.log('URL書き換え')
+    this.targetId = to.params.id
+    next()
   },
   mounted () {
     this.init()
@@ -88,6 +92,12 @@ export default {
       console.log('getter')
       // console.log(this.$store.getters['links/data'])
       return this.$store.getters['links/data']
+    },
+    isLogin () {
+      return this.$store.getters['auth/check']
+    },
+    userinfo () {
+      return this.$store.getters['auth/user']
     }
   }
 }

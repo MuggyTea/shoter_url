@@ -7,6 +7,7 @@ import { ADD, REMOVE } from './mutation-types'
 
 // DBを呼び出す
 const LinkRef = firestore.collection('LinkList')
+const TwitterUser = firestore.collection('Users')
 
 export default {
   namespaced: true,

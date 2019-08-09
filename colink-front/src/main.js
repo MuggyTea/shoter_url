@@ -23,15 +23,7 @@ Vue.use(moment)
 
 Vue.config.productionTip = false
 
-const createApp = async () => {
-  await firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      console.log(user)
-      store.dispatch('auth/currentUser', user)
-    } else {
-      store.dispatch('auth/currentUser', null)
-    }
-  })
+const createApp = () => {
   /* eslint-disable no-new */
   new Vue({
     el: '#app',
@@ -40,6 +32,15 @@ const createApp = async () => {
     'store': store,
     components: { App },
     template: '<App/>'
+  })
+
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      console.log(user)
+      store.dispatch('auth/currentUser', user)
+    } else {
+      store.dispatch('auth/currentUser', null)
+    }
   })
 }
 createApp()

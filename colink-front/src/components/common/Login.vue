@@ -10,7 +10,7 @@
         {{ userinfo }}
       </p>
     </template>-->
-    <v-btn dark color="#2196F3" v-if="isLogin" @click="signOut">Sign-Out</v-btn>
+    <v-btn dark color="#2196F3" v-if="isAuth" @click="signOut">Sign-Out</v-btn>
     <v-btn dark color="#2196F3" v-else @click="signIn">Twitter Login</v-btn>
   </div>
   <!-- <router-view :isAuth="isAuth" :userName="userName" :userPic="userPic"></router-view> -->
@@ -66,12 +66,13 @@ export default {
       })
   },
   methods: {
-    signIn: async function () {
-      await this.$store.dispatch('auth/login')
+    signIn: function () {
+      this.$store.dispatch('auth/login')
+      this.$router.push('/')
     },
     signOut: function () {
       this.$store.dispatch('auth/logout')
-      this.$router.push('/')
+      // this.$router.push('/')
     }
   }
 }

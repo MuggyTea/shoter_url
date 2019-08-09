@@ -35,7 +35,7 @@ const routes = [
     }
   },
   {
-    path: '/',
+    path: '/:screenName',
     name: 'LinkList',
     component: LinkList,
     props: true,

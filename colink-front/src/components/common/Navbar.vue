@@ -26,8 +26,8 @@ export default {
     Login
   },
   methods: {
-    signIn: async function () {
-      await this.$store.dispatch('auth/login')
+    signIn: function () {
+      this.$store.dispatch('auth/login')
     }
   },
   computed: {
