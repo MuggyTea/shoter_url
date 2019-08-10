@@ -6,7 +6,7 @@ import CONSTANS from '../../components/constants'
 
 // DBを呼び出す
 const LinkRef = firestore.collection('LinkList')
-const currentUserInfo = firestore.collection('currentUserInfo')
+// const currentUserInfo = firestore.collection('currentUserInfo')
 
 export default {
   namespaced: true,

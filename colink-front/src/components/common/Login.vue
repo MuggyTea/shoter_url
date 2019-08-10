@@ -68,7 +68,7 @@ export default {
   methods: {
     signIn: function () {
       this.$store.dispatch('auth/login')
-      this.$router.push('/')
+      // this.$router.push('/')
     },
     signOut: function () {
       this.$store.dispatch('auth/logout')

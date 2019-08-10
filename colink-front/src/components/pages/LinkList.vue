@@ -48,17 +48,15 @@ export default {
   },
   data () {
     return {
-      user_id: this.userinfo
+      // 表示してるユーザーページ
+      screenName: this.$route.params.screenName
     }
   },
-  props: [
-    'screenName'
-  ],
   // pathの:idを直接書き換えた時の対応
   beforeRouteUpdate (to, from, next) {
     // 動的セグメントが変わった場合は、コールバック関数でtargetIdを更新する
     console.log('URL書き換え')
-    this.targetId = to.params.id
+    this.screenName = to.params.id
     next()
   },
   mounted () {
@@ -74,7 +72,12 @@ export default {
       this.$store.dispatch('links/clear')
     },
     start () {
-      this.$store.dispatch('links/startListener')
+      console.log(this.userinfo)
+      console.log(this.screenName)
+      const User = this.userinfo
+      const screenName = this.screenName
+      console.log(User)
+      this.$store.dispatch('links/startListener', {screenName})
     },
     stop () {
       this.$store.dispatch('links/stopListener')

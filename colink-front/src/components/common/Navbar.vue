@@ -25,6 +25,19 @@ export default {
   components: {
     Login
   },
+  data () {
+    return {
+      // 表示してるユーザーページ
+      screenName: this.$route.params.screenName
+    }
+  },
+  // pathの:idを直接書き換えた時の対応
+  beforeRouteUpdate (to, from, next) {
+    // 動的セグメントが変わった場合は、コールバック関数でtargetIdを更新する
+    console.log('URL書き換え')
+    this.screenName = to.params.id
+    next()
+  },
   methods: {
     signIn: function () {
       this.$store.dispatch('auth/login')

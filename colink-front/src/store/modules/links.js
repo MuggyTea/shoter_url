@@ -7,7 +7,7 @@ import { ADD, REMOVE } from './mutation-types'
 
 // DBを呼び出す
 const LinkRef = firestore.collection('LinkList')
-const TwitterUser = firestore.collection('Users')
+// const TwitterUser = firestore.collection('Users')
 
 export default {
   namespaced: true,
@@ -61,16 +61,20 @@ export default {
       commit('init', [])
     },
     // リスナーの起動
-    startListener ({ commit }) {
-      if (this.unsubscribe) {
+    startListener ({ commit }, userinfo) {
+      if (this.unsubscribe || this.userinfo) {
         console.warn('listener is already running. ', this.unsubscribe)
         this.unsubscribe()
         this.unsubscribe = null
       }
+      console.log(userinfo)
+      console.log(userinfo.screenName)
       // firestoreからデータを検索する
-      this.unsubscribe = LinkRef.orderBy('createAt', 'asc').onSnapshot(querySnapshot => {
+      this.unsubscribe = LinkRef.where('screenName', '==', userinfo.screenName).onSnapshot(querySnapshot => {
         // データが更新されるたびに呼び出される
+        console.log(querySnapshot)
         querySnapshot.docChanges().forEach(change => {
+          // querySnapshot.forEach(change => {
           console.log('links.js')
           console.log(change.doc.data())
           // 時刻がnullのものは表示しない
