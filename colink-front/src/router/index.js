@@ -10,7 +10,7 @@ import Login from '../components/common/Login'
 import LinkPage from '../components/pages/LinkPage'
 import NotFound from '../components/pages/NotFound'
 import MarkDownPanel from '../components/MarkDownPanel'
-import HelloWorld from '../components/HelloWorld'
+import HelloWorld from '../components/pages/HelloWorld'
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
@@ -35,7 +35,7 @@ const routes = [{
   }
 },
 {
-  path: '/:screenName',
+  path: '/:screen_name',
   name: 'LinkList',
   component: LinkList,
   props: true,
@@ -43,6 +43,15 @@ const routes = [{
     title: 'link list'
   }
 },
+  // {
+  //   path: '/:screenName',
+  //   name: 'CreatePage',
+  //   component: Navbar,
+  //   props: true,
+  //   meta: {
+  //     title: 'link list'
+  //   }
+  // },
 {
   path: '*',
   component: NotFound

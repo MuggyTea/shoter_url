@@ -47,19 +47,25 @@ export default {
     'link-list-form': LinkListForm
   },
   data () {
+    // console.log(this.userinfo.screenName)
     return {
       // 表示してるユーザーページ
-      screenName: this.$route.params.screenName
+      // screenName: this.$route.params.screenName
+      // screenName: this.userinfo.screenName
     }
   },
+  props: [
+    'screen_name'
+  ],
   // pathの:idを直接書き換えた時の対応
   beforeRouteUpdate (to, from, next) {
     // 動的セグメントが変わった場合は、コールバック関数でtargetIdを更新する
     console.log('URL書き換え')
-    this.screenName = to.params.id
+    this.screen_name = to.params.id
     next()
   },
   mounted () {
+    this.userinfo()
     this.init()
     this.start()
   },
@@ -72,7 +78,8 @@ export default {
       this.$store.dispatch('links/clear')
     },
     start () {
-      console.log(this.userinfo)
+      const userinfo = this.userinfo()
+      console.log(userinfo)
       console.log(this.screenName)
       const User = this.userinfo
       const screenName = this.screenName

@@ -69,6 +69,11 @@ export default {
       }
       console.log(userinfo)
       console.log(userinfo.screenName)
+      if (!userinfo.screenName || !userinfo) {
+        console.warn('user does not exist')
+        console.log(userinfo)
+        return
+      }
       // firestoreからデータを検索する
       this.unsubscribe = LinkRef.where('screenName', '==', userinfo.screenName).onSnapshot(querySnapshot => {
         // データが更新されるたびに呼び出される

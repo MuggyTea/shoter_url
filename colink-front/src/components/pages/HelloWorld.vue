@@ -1,5 +1,7 @@
 <template>
   <div class="hello">
+    {{ userinfo }}
+    {{ userinfo.screenName }}
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -89,6 +91,11 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  computed: {
+    userinfo () {
+      return this.$store.getters['auth/user']
     }
   }
 }
