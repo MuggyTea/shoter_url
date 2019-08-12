@@ -76,8 +76,6 @@ export default {
     },
     start (screenName) {
       console.log(screenName)
-      // const User = this.userinfo
-      // const screenName = userinfo.screenName
       this.$store.dispatch('links/startListener', {screenName})
     },
     stop () {
@@ -94,8 +92,6 @@ export default {
   computed: {
     userinfo () {
       console.log('userinfo取得')
-      // console.log(this.$store.getters['auth/user'])
-      // console.log($store.getters['auth/user'])
       return this.$store.getters['auth/user']
     },
     isLogin () {
@@ -104,7 +100,6 @@ export default {
     },
     links () {
       console.log('getter')
-      // console.log(this.$store.getters['links/data'])
       return this.$store.getters['links/data']
     }
   }

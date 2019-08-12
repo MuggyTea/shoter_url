@@ -47,7 +47,8 @@ export default {
   // routeの動的セグメント
   props: [
     'link_id',
-    'id'
+    'id',
+    'screen_name'
   ],
   // pathの:idを直接書き換えた時の対応
   beforeRouteUpdate (to, from, next) {

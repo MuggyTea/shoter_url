@@ -106,9 +106,10 @@ export default {
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
             console.log('change.type add', change.type)
-            commit(ADD, payload)
+            // commit(ADD, payload)
+            commit(ADD, change.doc.data())
           } else if (change.type === 'modified') {} else if (change.type === 'removed') {
-            commit('REMOVE', payload)
+            commit('REMOVE', change.doc.data())
           }
         })
       },

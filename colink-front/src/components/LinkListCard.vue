@@ -8,7 +8,7 @@
             <div>
               <router-link
                 v-bind:to="{name: 'LinkPage',
-            params: {link_id: link.link_id, id: link.id} }"
+            params: {link_id: link.link_id, id: link.id, screen_name: link.screenName} }"
               >
                 <div color class="headline">{{ formatedTitle }}</div>
               </router-link>
@@ -58,7 +58,8 @@ export default {
       if (!this.link || !this.link.createAt) {
         return ''
       }
-      return this.$moment(this.link.createAt).fromNow()
+      const createAt = new Date(this.link.createAt.seconds * 1000)
+      return this.$moment(createAt).fromNow()
     },
     getOmissionAndPlusMidpoint (str, limit) {
       if (str.length < limit) {
@@ -68,6 +69,9 @@ export default {
     }
   },
   computed: {
+    userinfo () {
+      return this.$store.getters['auth/user']
+    },
     formatedTitle () {
       if (!this.link || !this.link.link_title) {
         return ''
