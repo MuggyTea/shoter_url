@@ -47,11 +47,7 @@ export default {
     'link-list-form': LinkListForm
   },
   data () {
-    // console.log(this.userinfo.screenName)
     return {
-      // 表示してるユーザーページ
-      // screenName: this.$route.params.screenName
-      // screenName: this.userinfo.screenName
     }
   },
   props: [
@@ -61,13 +57,14 @@ export default {
   beforeRouteUpdate (to, from, next) {
     // 動的セグメントが変わった場合は、コールバック関数でtargetIdを更新する
     console.log('URL書き換え')
-    this.screen_name = to.params.id
+    this.screen_name = to.params.screen_name
+    this.init()
+    this.start(this.screen_name)
     next()
   },
   mounted () {
-    this.userinfo()
     this.init()
-    this.start()
+    this.start(this.screen_name)
   },
   destroyed () {
     this.stop()
@@ -77,13 +74,10 @@ export default {
       console.log('メモを検索する')
       this.$store.dispatch('links/clear')
     },
-    start () {
-      const userinfo = this.userinfo()
-      console.log(userinfo)
-      console.log(this.screenName)
-      const User = this.userinfo
-      const screenName = this.screenName
-      console.log(User)
+    start (screenName) {
+      console.log(screenName)
+      // const User = this.userinfo
+      // const screenName = userinfo.screenName
       this.$store.dispatch('links/startListener', {screenName})
     },
     stop () {
@@ -98,16 +92,20 @@ export default {
   // getterには引数は渡せない
   // ゲッター
   computed: {
+    userinfo () {
+      console.log('userinfo取得')
+      // console.log(this.$store.getters['auth/user'])
+      // console.log($store.getters['auth/user'])
+      return this.$store.getters['auth/user']
+    },
+    isLogin () {
+      console.log('ログイン判定取得')
+      return this.$store.getters['auth/check']
+    },
     links () {
       console.log('getter')
       // console.log(this.$store.getters['links/data'])
       return this.$store.getters['links/data']
-    },
-    isLogin () {
-      return this.$store.getters['auth/check']
-    },
-    userinfo () {
-      return this.$store.getters['auth/user']
     }
   }
 }
