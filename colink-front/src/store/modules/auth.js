@@ -104,6 +104,7 @@ const actions = {
     if (!user) {
       context.commit('setUser', null)
     } else {
+      console.log(user.uid)
       const currentUser = currentUserInfo.doc(user.uid)
       console.log(currentUser)
       console.log(typeof currentUser)

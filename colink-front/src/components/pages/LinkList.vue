@@ -1,6 +1,8 @@
 <template>
   <div class="link-list">
-    <user-profile />
+    <user-profile
+    v-bind:screen_name="screen_name"
+     />
     <v-card>
       <v-container fluid grid-list-md>
         <v-layout row wrap>

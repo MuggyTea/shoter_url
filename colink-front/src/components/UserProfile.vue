@@ -1,11 +1,12 @@
 <template>
+<v-container class="align-center justify-center layout text-center">
 <v-card
 class="prof mx-auto"
 max-width="100%"
 >
 <v-img
-v-if="userinfo.backgroundPhoto"
-:src="userinfo.backgroundPhoto"
+v-if="userdata.backgroundPhoto"
+:src="userdata.backgroundPhoto"
 height="200px"
 >
 </v-img>
@@ -15,45 +16,90 @@ height="200px"
 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
 >
 </v-img>
-<v-col
-class="align-center justify-center layout text-center"
-cols="12"
-sm="6"
-md="8"
->
 <v-avatar
 color="grey lighten-4"
 size="70px"
 >
 <img
-v-if="userinfo.photoURL"
-:src="userinfo.photoURL"
+v-if="userdata.photoURL"
+:src="userdata.photoURL"
 alt="profile"
 >
 <span v-else></span>
 </v-avatar>
-</v-col>
 <v-card-title class="name align-end justify-center fill-height">
-    {{ userinfo.displayName }}
+    {{ userdata.displayName }}
         <ul class="icon">
-      <li class="twitter"><a :href="userinfo.twitterURL" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" /></a></li>
+      <li class="twitter"><a :href="userdata.twitterURL" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" /></a></li>
     </ul>
 </v-card-title>
 
 <v-card-text>
     <span class="txt">
-        <span>{{ userinfo.description }}</span>
+        <span>{{ userdata.description }}</span>
     </span>
 </v-card-text>
 </v-card>
+</v-container>
 </template>
 
 <script>
 export default {
   name: 'UserProfile',
+  data: function () {
+    return {
+    //   userData: this.payload
+    }
+  },
+  props: {
+    'screen_name': {
+      type: String,
+      required: true
+    }
+  },
+  mounted () {
+    this.userProfile()
+  },
+  methods: {
+    userProfile () {
+      console.log(this.screen_name)
+      this.$store.dispatch('user/userData', {screen_name: this.screen_name})
+    }
+    // userProfile () {
+    //   console.log(this.screen_name)
+    //   console.log(firestore.collection('currentUserInfo').where('screenName', '==', this.screen_name).get())
+    //   firestore.collection('currentUserInfo').where('screenName', '==', this.screen_name).get().then((querySnapshot) => {
+    //     querySnapshot.forEach((doc) => {
+    //       console.log(doc.id)
+    //       console.log(doc.data())
+    //     //   const user = doc.data()
+    //     //   console.log(user)
+    //     //   const payload = {
+    //     //     'displayName': user.displayName,
+    //     //     'photoURL': user.photoURL,
+    //     //     'backgroundPhoto': user.profile_banner_url,
+    //     //     'uid': user.uid,
+    //     //     'screenName': user.screen_name,
+    //     //     'description': user.description,
+    //     //     'id_str': user.id_str,
+    //     //     'twitterURL': 'https://twitter.com/' + user.screen_name,
+    //     //     'timestamp': user.timestamp
+    //     //   }
+    //     //   return payload
+    //     })
+    //   })
+    //   return this.doc.data()
+    //     .catch(function (error) {
+    //       console.log('Error getting documents: ', error)
+    //     })
+    // }
+  },
   computed: {
     userinfo () {
       return this.$store.getters['auth/user']
+    },
+    userdata () {
+      return this.$store.getters['user/userProfile']
     }
   }
 }
@@ -62,8 +108,8 @@ export default {
 <style>
 /* プロフィール */
 .prof {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    /* padding-top: 20px;
+    padding-bottom: 20px; */
 }
 .prof .icatch{
     margin:0;
