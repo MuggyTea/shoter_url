@@ -63,13 +63,18 @@ const actions = {
                 console.log(userInfo)
                 // firestoreに送る
                 console.log('regist current users table')
+                if (!userInfo.profile_banner_url) {
+                  userInfo.profile_banner_url = null
+                }
                 const payload = {
                   'displayName': user.displayName,
                   'photoURL': user.photoURL,
+                  'backgroundPhoto': userInfo.profile_banner_url,
                   'uid': user.uid,
                   'screenName': userInfo.screen_name,
                   'description': userInfo.description,
                   'id_str': userInfo.id_str,
+                  'twitterURL': 'https://twitter.com/' + userInfo.screen_name,
                   'timestamp': firebase.firestore.FieldValue.serverTimestamp()
                 }
                 currentUserInfo.doc(user.uid).set(payload, { merge: true })

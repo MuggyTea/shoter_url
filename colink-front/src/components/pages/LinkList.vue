@@ -1,5 +1,6 @@
 <template>
   <div class="link-list">
+    <user-profile />
     <v-card>
       <v-container fluid grid-list-md>
         <v-layout row wrap>
@@ -37,6 +38,7 @@ import LinkPhoto from '../LinkPhoto'
 import OneLink from '../OneLink'
 import LinkListCard from '../LinkListCard'
 import LinkListForm from '../LinkListForm'
+import UserProfile from '../UserProfile'
 
 export default {
   name: 'LinkList',
@@ -44,7 +46,8 @@ export default {
     'link-photo': LinkPhoto,
     'one-link': OneLink,
     'link-list-card': LinkListCard,
-    'link-list-form': LinkListForm
+    'link-list-form': LinkListForm,
+    'user-profile': UserProfile
   },
   data () {
     return {
