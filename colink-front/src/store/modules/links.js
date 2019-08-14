@@ -15,7 +15,8 @@ export default {
   state () {
     return {
       // 配列
-      data: []
+      data: [],
+      alldata: []
       //   create_num: 0
     }
   },
@@ -30,9 +31,10 @@ export default {
       // DBから受け取ったデータをステートにセット
       state.data.push(payload)
     },
-    add_linkid (state, payload) {
-      console.log('add link_id')
+    alldata (state, payload) {
+      console.log('alldataをステートに追加')
       // link_idを追加で更新する
+      state.alldata.push(payload)
     },
     // 呼び出すとき
     set (state, payload) {
@@ -54,6 +56,9 @@ export default {
   getters: {
     data (state) {
       return state.data
+    },
+    alldata (state) {
+      return state.alldata
     }
   },
   actions: {
@@ -108,6 +113,55 @@ export default {
             console.log('change.type add', change.type)
             // commit(ADD, payload)
             commit(ADD, change.doc.data())
+          } else if (change.type === 'modified') {} else if (change.type === 'removed') {
+            commit('REMOVE', change.doc.data())
+          }
+        })
+      },
+      (error) => {
+        console.error(error.name)
+      })
+    },
+    startListenerAll ({ commit }) {
+      if (this.unsubscribe) {
+        console.warn('listener is already running. ', this.unsubscribe)
+        this.unsubscribe()
+        this.unsubscribe = null
+      }
+      // firestoreからデータを検索する
+      this.unsubscribe = LinkRef.onSnapshot(querySnapshot => {
+        // データが更新されるたびに呼び出される
+        console.log(querySnapshot)
+        querySnapshot.docChanges().forEach(change => {
+          // querySnapshot.forEach(change => {
+          console.log('alllllinks.js')
+          console.log(change.doc.data())
+          // 時刻がnullのものは表示しない
+          if (!change.doc.data().createAt) {
+            console.log(change.doc.data())
+            return
+          }
+          const payload = {
+            id: change.doc.id,
+            link_id: (change.doc.id).substr(0, 4),
+            create_num: change.doc.data().create_num,
+            link_title: change.doc.data().link_title,
+            description: change.doc.data().description,
+            platforms: change.doc.data().platforms,
+            million: change.doc.data().million,
+            createAt: new Date(change.doc.data().createAt.seconds * 1000),
+            photo: change.doc.data().photo
+          }
+          console.log('add link_id')
+          LinkRef.doc(change.doc.id).update({
+            'link_id': payload.link_id
+          })
+          console.log(payload)
+          // ミューテーションを通してステートを更新する
+          if (change.type === 'added') {
+            console.log('change.type add', change.type)
+            // commit(ADD, payload)
+            commit('alldata', change.doc.data())
           } else if (change.type === 'modified') {} else if (change.type === 'removed') {
             commit('REMOVE', change.doc.data())
           }

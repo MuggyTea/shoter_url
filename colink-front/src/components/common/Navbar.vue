@@ -3,6 +3,7 @@
     <v-toolbar color="primary">
       <router-link to="/">
         <v-toolbar-title>Co-Links</v-toolbar-title>
+        <!-- <v-toolbar-title>Index</v-toolbar-title> -->
       </router-link>
       <v-spacer></v-spacer>
       <!-- <v-btn icon>
@@ -34,8 +35,7 @@ export default {
   },
   data () {
     return {
-      // 表示してるユーザーページ
-      // screenName: this.$route.params.screenName
+      screenName: this.userinfo ? this.userinfo.screenName : null
     }
   },
   // props: {

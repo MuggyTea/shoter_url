@@ -1,15 +1,11 @@
 <template>
   <div class="link-list">
-    <user-profile
-    v-bind:user_profile="screen_name"
-     />
     <v-card>
       <v-container fluid grid-list-md>
         <v-layout row wrap>
           <!-- <h1>Index</h1> -->
           <div class="row justify-content-center">
-            <!-- {{ links }} -->
-            <link-list-card v-for="(link, index) in links" v-bind:key="index" v-bind:link="link"></link-list-card>
+            <link-list-card v-for="(link, index) in alllinks" v-bind:key="index" v-bind:link="link"></link-list-card>
             <link-list-form></link-list-form>
           </div>
         </v-layout>
@@ -18,7 +14,7 @@
     <div class="row__test__delete">
       <button
         class="btn-sm btn-dark m-1"
-        v-for="(link, index) in links"
+        v-for="(link, index) in alllinks"
         v-bind:key="index"
         v-on:click="remove(link.id)"
       >{{ index }}</button>
@@ -36,14 +32,14 @@
 </template>
 
 <script>
-import LinkPhoto from '../LinkPhoto'
-import OneLink from '../OneLink'
-import LinkListCard from '../LinkListCard'
-import LinkListForm from '../LinkListForm'
-import UserProfile from '../UserProfile'
+import LinkPhoto from '../components/LinkPhoto'
+import OneLink from '../components/OneLink'
+import LinkListCard from '../components/LinkListCard'
+import LinkListForm from '../components/LinkListForm'
+import UserProfile from '../components/UserProfile'
 
 export default {
-  name: 'LinkList',
+  name: 'IndexList',
   components: {
     'link-photo': LinkPhoto,
     'one-link': OneLink,
@@ -55,26 +51,18 @@ export default {
     return {
     }
   },
-  props: [
-    'screen_name'
-  ],
   // pathの:idを直接書き換えた時の対応
   beforeRouteUpdate (to, from, next) {
     // 動的セグメントが変わった場合は、コールバック関数でtargetIdを更新する
     console.log('URL書き換え')
-    console.log(to.params)
     this.screen_name = to.params.screen_name
-    next()
-    console.log('beforeRouteUpdateだよ')
     this.init()
-    this.start(this.screen_name)
-    this.getUser(this.screen_name)
+    this.start()
+    next()
   },
   mounted () {
-    console.log('mountedだよ')
     this.init()
-    this.start(this.screen_name)
-    // this.getUser(this.screen_name)
+    this.start()
   },
   destroyed () {
     this.stop()
@@ -84,9 +72,8 @@ export default {
       console.log('メモを検索する')
       this.$store.dispatch('links/clear')
     },
-    start (screenName) {
-      console.log(screenName)
-      this.$store.dispatch('links/startListener', {screenName})
+    start () {
+      this.$store.dispatch('links/startListenerAll')
     },
     stop () {
       this.$store.dispatch('links/stopListener')
@@ -94,9 +81,6 @@ export default {
     remove (id) {
       console.log(this.$store.dispatch('links/deleteLink', {id}))
       this.$store.dispatch('links/deleteLink', {id})
-    },
-    getUser (userProfile) {
-      this.$store.dispatch('user/userData', {screen_name: userProfile})
     }
   },
   // computedには結果がキャッシュされる
@@ -111,12 +95,10 @@ export default {
       console.log('ログイン判定取得')
       return this.$store.getters['auth/check']
     },
-    links () {
+    alllinks () {
       console.log('getter')
-      return this.$store.getters['links/data']
-    },
-    userdata () {
-      return this.$store.getters['user/userProfile']
+      console.log(this.$store.getters['links/alldata'])
+      return this.$store.getters['links/alldata']
     }
   }
 }

@@ -1,22 +1,26 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+    <!-- <h1>{{ msg }}</h1> -->
+    <h5>ユーザー名をタップするとユーザーページに飛ぶよ</h5>
+    <h6>ログインして書き込んでみてね</h6>
     <login />
+    <index-list />
   </div>
 </template>
 
 <script>
 import Login from '../common/Login'
+import IndexList from '../IndexList'
 export default {
-  name: 'HelloWorld',
+  name: 'Index',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Index'
     }
   },
   components: {
-    'login': Login
+    'login': Login,
+    'index-list': IndexList
   },
   computed: {
     userinfo () {

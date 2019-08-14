@@ -3,17 +3,6 @@
     <div class="col">
       <div class="card" v-if="link.id">
         <h5 class="card-title">{{ link.link_title }}</h5>
-        <!-- <h6 class="card-subtitle text-muted">
-          Platform:
-          <a href="#" class="badge" style="margin-left:4px;"
-          v-for="(platformm, index) in platforms"
-          v-bind:key="index"
-          v-bind:class="getTargetPlatformClass(platform)"
-          v-on:click.prevent="updatePlatform(platform)"
-          >
-          {{ platform }}
-          </a>
-        </h6>-->
       </div>
       <div class="card-body text-left">
         <p class="card-text" v-html="formatedDescription" />
@@ -21,12 +10,6 @@
         <small>Release Date. {{ formatedReleasedAt }}</small>
       </div>
       <div class="card-footer text-right">
-        <!-- <button class="btn"
-        v-bind:class="{'btn-primary': link.million, 'btn-success': !link.million}"
-        v-on:click="updateMillion(link.million)"
-        >
-        {{ millionButtonLabel }}
-        </button>-->
         <button class="btn btn-primary" v-on:click="historyBack">back</button>
       </div>
     </div>
@@ -80,6 +63,9 @@ export default {
     }
   },
   computed: {
+    userinfo () {
+      return this.$store.getters['auth/user']
+    },
     link () {
       if (!this.targetId) {
         console.error('invalid id')

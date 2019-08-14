@@ -2,7 +2,7 @@
 <v-container class="align-center justify-center layout text-center">
 <v-card
 class="prof mx-auto"
-max-width="100%"
+width="100%"
 >
 <v-img
 v-if="userdata.backgroundPhoto"
@@ -49,10 +49,12 @@ export default {
   data: function () {
     return {
     //   userData: this.payload
+    //   userdata: this.userdata()
+    //   userName: this.user_profile
     }
   },
   props: {
-    'screen_name': {
+    'user_profile': {
       type: String,
       required: true
     }
@@ -62,37 +64,9 @@ export default {
   },
   methods: {
     userProfile () {
-      console.log(this.screen_name)
-      this.$store.dispatch('user/userData', {screen_name: this.screen_name})
+      console.log(this.user_profile)
+      this.$store.dispatch('user/userData', {screen_name: this.user_profile})
     }
-    // userProfile () {
-    //   console.log(this.screen_name)
-    //   console.log(firestore.collection('currentUserInfo').where('screenName', '==', this.screen_name).get())
-    //   firestore.collection('currentUserInfo').where('screenName', '==', this.screen_name).get().then((querySnapshot) => {
-    //     querySnapshot.forEach((doc) => {
-    //       console.log(doc.id)
-    //       console.log(doc.data())
-    //     //   const user = doc.data()
-    //     //   console.log(user)
-    //     //   const payload = {
-    //     //     'displayName': user.displayName,
-    //     //     'photoURL': user.photoURL,
-    //     //     'backgroundPhoto': user.profile_banner_url,
-    //     //     'uid': user.uid,
-    //     //     'screenName': user.screen_name,
-    //     //     'description': user.description,
-    //     //     'id_str': user.id_str,
-    //     //     'twitterURL': 'https://twitter.com/' + user.screen_name,
-    //     //     'timestamp': user.timestamp
-    //     //   }
-    //     //   return payload
-    //     })
-    //   })
-    //   return this.doc.data()
-    //     .catch(function (error) {
-    //       console.log('Error getting documents: ', error)
-    //     })
-    // }
   },
   computed: {
     userinfo () {

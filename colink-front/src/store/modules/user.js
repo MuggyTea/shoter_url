@@ -24,25 +24,6 @@ const mutations = {
 }
 
 const actions = {
-  //   currentUser (context, user) {
-  //     console.log('currentUser')
-  //     console.log(user)
-  //     // ログインしていたら、認証情報からDBを引く
-  //     if (!user) {
-  //       context.commit('setUser', null)
-  //     } else {
-  //       console.log(user.uid)
-  //       const currentUser = currentUserInfo.doc(user.uid)
-  //       console.log(currentUser)
-  //       console.log(typeof currentUser)
-  //       console.log(currentUser.get())
-  //       currentUser.get().then(function (doc) {
-  //         console.log(doc.data())
-  //         // ステート更新
-  //         context.commit('setUser', doc.data())
-  //       })
-  //     }
-  //   },
   userData (context, screenName) {
     console.log(screenName)
     console.log(currentUserInfo.where('screenName', '==', screenName).get())

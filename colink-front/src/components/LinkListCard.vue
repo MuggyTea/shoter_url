@@ -1,20 +1,38 @@
 <template>
-  <v-card>
-    <v-container fill-height fluid pa-2>
+<div class="linkcard">
+  <v-card
+  width="320px"
+  raised
+  elevation="10"
+  >
+    <v-container linkcard fill-height fluid pa-2>
       <v-layout align-center fill-height>
         <v-flex align-end xs12 flexbox>
-          <v-img :src="link.src" max-height="100px"></v-img>
+          <!-- <v-img :src="link.src" max-height="100px"></v-img> -->
+          <v-img
+          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          height="200px"
+          v-if="link.userinfo.displayName"
+          >
+          <router-link
+          v-bind:to="{name: 'LinkList', params: {screen_name: link.screenName}}"
+          >
+          {{ link.userinfo.displayName }}
+          </router-link>
+          <v-else>
+          </v-else>
           <v-card-title primary-title>
-            <div>
               <router-link
                 v-bind:to="{name: 'LinkPage',
             params: {link_id: link.link_id, id: link.id, screen_name: link.screenName} }"
               >
                 <div color class="headline">{{ formatedTitle }}</div>
               </router-link>
+              </v-card-title>
+              </v-img>
+              <v-card-text>
               <span class="grey--text">{{ formatedDescription }}</span>
-            </div>
-          </v-card-title>
+              </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn flat>
@@ -32,6 +50,7 @@
       </v-layout>
     </v-container>
   </v-card>
+  </div>
 </template>
 
 <script>
@@ -69,8 +88,8 @@ export default {
     }
   },
   computed: {
-    userinfo () {
-      return this.$store.getters['auth/user']
+    userdata () {
+      return this.$store.getters['user/userProfile']
     },
     formatedTitle () {
       if (!this.link || !this.link.link_title) {
@@ -91,5 +110,9 @@ export default {
     }
   }
 }
-
 </script>
+<style>
+.linkcard {
+  padding:1px;
+}
+</style>
