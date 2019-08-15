@@ -9,12 +9,9 @@ export default {
   },
   NEW_EMPTY_MEMO () {
     return {
-      create_num: null,
-      title: '',
       description: '',
-      platforms: [],
-      million: false,
-      createAt: null
+      createAt: null,
+      photoURL: ''
     }
   },
   PLATFORMS: ['FC', 'SFC', 'GB', '64', 'GC', 'DS', 'Wii', '3DS', 'Wii U', 'Switch']

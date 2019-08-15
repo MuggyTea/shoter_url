@@ -98,12 +98,12 @@ export default {
             id_str: change.doc.data().id_str,
             screenName: change.doc.data().screenName,
             createAt: new Date(change.doc.data().createAt.seconds * 1000),
-            photo: change.doc.data().photo,
+            photoURL: change.doc.data().photoURL,
             uid: change.doc.data().uid,
             userinfo: change.doc.data().userinfo
           }
           // 時刻がnullのものとログインユーザー以外は表示しない
-          if (!change.doc.data().screenName || !change.doc.data().createAt || !change.doc.data().link_id) {
+          if (!change.doc.data().screenName || !change.doc.data().createAt) {
             console.warn('user does not exist')
             console.log(change.doc.data())
             return
@@ -114,7 +114,12 @@ export default {
             // commit(ADD, payload)
             console.log(payload)
             commit(ADD, payload)
-          } else if (change.type === 'modified') {} else if (change.type === 'removed') {
+          } else if (change.type === 'modified') {
+            console.log('change.type add', change.type)
+            // commit(ADD, payload)
+            // console.log(payload)
+            // commit(ADD, payload)
+          } else if (change.type === 'removed') {
             commit('REMOVE', payload)
           }
         })
@@ -140,18 +145,38 @@ export default {
           console.log(change)
           console.log(change.doc.data())
           // 時刻がnullのものとログインユーザー以外は表示しない
-          if (!change.doc.data().screenName || !change.doc.data().createAt || !change.doc.data().link_id) {
+          if (!change.doc.data().screenName || !change.doc.data().createAt) {
             console.warn('user does not exist')
             console.log(change.doc.data())
             return
           }
+          // ステート更新するために配列に格納（DBから直接読み込むと同期が追いつかない）
+          const payload = {
+            id: change.doc.id,
+            link_id: (change.doc.id).substr(0, 4),
+            create_num: change.doc.data().create_num,
+            link_title: change.doc.data().link_title,
+            description: change.doc.data().description,
+            id_str: change.doc.data().id_str,
+            screenName: change.doc.data().screenName,
+            createAt: new Date(change.doc.data().createAt.seconds * 1000),
+            photoURL: change.doc.data().photoURL,
+            uid: change.doc.data().uid,
+            userinfo: change.doc.data().userinfo
+          }
+
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
             console.log('change.type add', change.type)
             // commit(ADD, payload)
-            commit('alldata', change.doc.data())
-          } else if (change.type === 'modified') {} else if (change.type === 'removed') {
-            commit('REMOVE', change.doc.data())
+            commit('alldata', payload)
+          } else if (change.type === 'modified') {
+            console.log('change.type add', change.type)
+            // // commit(ADD, payload)
+            // console.log(payload)
+            // commit(ADD, payload)
+          } else if (change.type === 'removed') {
+            commit('REMOVE', payload)
           }
         })
       },

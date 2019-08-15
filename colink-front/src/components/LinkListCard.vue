@@ -16,7 +16,18 @@
           <v-img
           src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
           height="200px"
-          v-if="link.userinfo.displayName"
+          v-if="!link.photoURL"
+          >
+          <v-btn flat
+          v-bind:to="{name: 'LinkList', params: {screen_name: link.screenName}}"
+          >
+          {{ link.userinfo.displayName }}
+          </v-btn>
+          </v-img>
+          <v-img
+          v-else
+          :src="link.photoURL"
+          height="200px"
           >
           <v-btn flat
           v-bind:to="{name: 'LinkList', params: {screen_name: link.screenName}}"

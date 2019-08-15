@@ -1,52 +1,35 @@
 <template>
     <div v-show="value" class="photo-form">
-        <!-- <h2 class="title">Submit a photo</h2>
-        <form class="form">
-            <input
-            class="form__item"
-            type="file"
-            @change="onFileChange"
-            >
-            <output class="form__output" v-if="preview">
-                <img
-                :src="preview"
-                alt=""
+        <!-- <v-flex xs12 sm8 md4> -->
+            <v-card class="elevation-12">
+                <output class="form__output" v-if="preview">
+                    <img
+                        :src="preview"
+                        alt=""
+                        max-width="200px"
+                        height="200px"
+                        >
+                </output>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                <v-btn color="primary"
+                label="Select Image"
+                @click="pickFile"
+                v-model="imageName"
+                prepend-icon="attach_file"
                 >
-            </output>
-            <div class="form__button">
-                <button type="submit" class="button button--inverse">Submit</button>
-            </div>
-        </form> -->
-            <!-- <v-flex xs12 sm8 md4> -->
-                <v-card class="elevation-12">
-                    <output class="form__output" v-if="preview">
-                        <img
-                            :src="preview"
-                            alt=""
-                            max-width="200px"
-                            height="200px"
-                            >
-                    </output>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                    <v-btn color="primary"
-                    label="Select Image"
-                    @click="pickFile"
-                    v-model="imageName"
-                    prepend-icon="attach_file"
-                    >
-                    画像アップロード
-                    <input
-                    type="file"
-                    style="display: none"
-                    ref="image"
-                    accept="image/*"
-                    @change="onFilePicked"
-                    />
-                    </v-btn>
-                    </v-card-actions>
-                </v-card>
-            <!-- </v-flex> -->
+                画像アップロード
+                <input
+                type="file"
+                style="display: none"
+                ref="image"
+                accept="image/*"
+                @change="onFilePicked"
+                />
+                </v-btn>
+                </v-card-actions>
+            </v-card>
+        <!-- </v-flex> -->
 
     </div>
 
