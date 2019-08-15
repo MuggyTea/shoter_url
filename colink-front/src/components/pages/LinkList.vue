@@ -6,8 +6,8 @@
     <v-card>
       <v-container fluid grid-list-md>
         <v-layout row wrap justify-content-center>
+          <link-list-form></link-list-form>
             <link-list-card v-for="(link, index) in links" v-bind:key="index" v-bind:link="link"></link-list-card>
-            <link-list-form></link-list-form>
         </v-layout>
       </v-container>
     </v-card>

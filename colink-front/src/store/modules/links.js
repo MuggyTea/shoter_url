@@ -74,6 +74,7 @@ export default {
       }
       console.log(userinfo)
       console.log(userinfo.screenName)
+      // ユーザー情報がないものは表示しない
       if (!userinfo.screenName || !userinfo) {
         console.warn('user does not exist')
         console.log(userinfo)
@@ -87,8 +88,23 @@ export default {
           // querySnapshot.forEach(change => {
           console.log('links.js')
           console.log(change.doc.data())
-          // 時刻がnullのものは表示しない
-          if (!change.doc.data().createAt) {
+          // ステート更新するために配列に格納（DBから直接読み込むと同期が追いつかない）
+          const payload = {
+            id: change.doc.id,
+            link_id: (change.doc.id).substr(0, 4),
+            create_num: change.doc.data().create_num,
+            link_title: change.doc.data().link_title,
+            description: change.doc.data().description,
+            id_str: change.doc.data().id_str,
+            screenName: change.doc.data().screenName,
+            createAt: new Date(change.doc.data().createAt.seconds * 1000),
+            photo: change.doc.data().photo,
+            uid: change.doc.data().uid,
+            userinfo: change.doc.data().userinfo
+          }
+          // 時刻がnullのものとログインユーザー以外は表示しない
+          if (!change.doc.data().screenName || !change.doc.data().createAt || !change.doc.data().link_id) {
+            console.warn('user does not exist')
             console.log(change.doc.data())
             return
           }
@@ -96,9 +112,10 @@ export default {
           if (change.type === 'added') {
             console.log('change.type add', change.type)
             // commit(ADD, payload)
-            commit(ADD, change.doc.data())
+            console.log(payload)
+            commit(ADD, payload)
           } else if (change.type === 'modified') {} else if (change.type === 'removed') {
-            commit('REMOVE', change.doc.data())
+            commit('REMOVE', payload)
           }
         })
       },
@@ -123,15 +140,11 @@ export default {
           console.log(change)
           console.log(change.doc.data())
           // 時刻がnullのものとログインユーザー以外は表示しない
-          if (!change.doc.data().screenName || !change.doc.data().createAt) {
+          if (!change.doc.data().screenName || !change.doc.data().createAt || !change.doc.data().link_id) {
             console.warn('user does not exist')
             console.log(change.doc.data())
             return
           }
-          // if (change.newIndex === 15) {
-          //   console.log('15件取得したので終わり')
-          //   return true
-          // }
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
             console.log('change.type add', change.type)
@@ -159,6 +172,11 @@ export default {
       LinkRef.add(payload)
         .then(doc => {
           // ミューテーションの外でステート管理しない
+          console.log('link_idを追加する')
+          // link_idをDBに追加
+          LinkRef.doc(doc.id).update({
+            'link_id': (doc.id).substr(0, 4)
+          })
         })
         .catch(err => {
           console.error('Error adding document: ', err)

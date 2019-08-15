@@ -101,7 +101,7 @@ export default {
   watch: {
     'link' (n, o) {
       if (!n) {
-        this.$router.push('/link-list')
+        this.$router.push(':screen_name')
       }
     }
   }

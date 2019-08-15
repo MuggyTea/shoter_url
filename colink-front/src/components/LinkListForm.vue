@@ -6,6 +6,11 @@
         <div class="card-body text-left">
             <textarea class="form-control" placeholder="descriptioin" v-model.trim="link.description"></textarea>
         </div>
+        <button class="button" @click="showForm = ! showForm">
+          <i class="icon ion-md-add"></i>
+          photo upload
+        </button>
+        <PhotoUpload v-model="showForm" />
         <div class="card-footer text-right">
             <button class="btn-sm btn-secondary" type="submit" v-on:click.prevent="addLink">add</button>
         </div>
@@ -13,11 +18,17 @@
 </template>
 <script>
 import CONSTANTS from './constants'
+import PhotoUpload from './PhotoUpload'
+
 export default {
   name: 'LinkListForm',
+  components: {
+    PhotoUpload
+  },
   data () {
     return {
-      link: this.emptyLink()
+      link: this.emptyLink(),
+      showForm: false
     }
   },
   methods: {

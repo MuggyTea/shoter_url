@@ -17,7 +17,7 @@
         v-if="isLogin"
         :to="{ name: 'LinkList', params: {screen_name: userinfo.screenName }}"
         >
-        Create page</v-btn>
+        User page</v-btn>
         <v-btn dark color="#2196F3" v-else @click="signIn">Twitter Login</v-btn>
       </v-toolbar-items>
     </v-toolbar>

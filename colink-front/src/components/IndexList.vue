@@ -5,8 +5,9 @@
         <v-layout row wrap>
           <!-- <h1>Index</h1> -->
           <div class="row justify-content-center">
-            <link-list-card v-for="(link, index) in alllinks" v-bind:key="index" v-bind:link="link"></link-list-card>
+            <PhotoUpload />
             <link-list-form></link-list-form>
+            <link-list-card v-for="(link, index) in alllinks" v-bind:key="index" v-bind:link="link"></link-list-card>
           </div>
         </v-layout>
       </v-container>
