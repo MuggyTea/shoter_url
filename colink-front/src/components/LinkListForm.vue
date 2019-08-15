@@ -45,14 +45,14 @@
 </template>
 <script>
 import CONSTANTS from './constants'
-import PhotoUpload from './PhotoUpload'
+// import PhotoUpload from './PhotoUpload'
 import firebase from 'firebase'
-import firestore from '../plugins/firebase'
+// import firestore from '../plugins/firebase'
 
 export default {
   name: 'LinkListForm',
   components: {
-    PhotoUpload
+    // PhotoUpload
   },
   data () {
     return {
@@ -62,9 +62,9 @@ export default {
       photo: null,
       photo_url: null,
       dialog: false,
-      imageName: '',
-      imageURL: '',
-      imageFile: ''
+      imageName: null,
+      imageURL: null,
+      imageFile: null
     }
   },
   methods: {
@@ -82,6 +82,13 @@ export default {
       this.link.screenName = this.userinfo.screenName
       this.link.uid = this.userinfo.uid
       this.link.id_str = this.userinfo.id_str
+      if (!this.imageName) {
+        console.log(this.link)
+        // ステートを変更
+        this.$store.dispatch('links/addLink', this.link)
+        // 空に戻す
+        this.link = this.emptyLink()
+      }
       // ストレージオブジェクト作成
       const storageRef = firebase.storage().ref()
       // ファイルパス設定

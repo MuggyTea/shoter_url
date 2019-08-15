@@ -18,7 +18,8 @@
         v-for="(link, index) in alllinks"
         v-bind:key="index"
         v-on:click="remove(link.id)"
-      >{{ index }}</button>
+      >{{ index }}
+      </button>
     </div>
     <!-- <div class="grid">
             <link-photo

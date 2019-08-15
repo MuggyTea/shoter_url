@@ -36,6 +36,10 @@ export default {
       // link_idを追加で更新する
       state.alldata.push(payload)
     },
+    addData (state, payload) {
+      console.log('データを更新')
+      state.alldata.unshift(payload)
+    },
     // 呼び出すとき
     set (state, payload) {
       const index = state.data.findIndex(link => link.id === payload.id)
@@ -109,16 +113,17 @@ export default {
             return
           }
           // ミューテーションを通してステートを更新する
-          if (change.type === 'added') {
+          if (change.type === 'added' && change.doc.data().link_id) {
             console.log('change.type add', change.type)
             // commit(ADD, payload)
             console.log(payload)
             commit(ADD, payload)
-          } else if (change.type === 'modified') {
+          } else if (change.type === 'modified' && change.doc.data().link_id) {
             console.log('change.type add', change.type)
             // commit(ADD, payload)
             // console.log(payload)
             // commit(ADD, payload)
+            commit('addData', change.doc.data())
           } else if (change.type === 'removed') {
             commit('REMOVE', payload)
           }
@@ -138,7 +143,6 @@ export default {
       this.unsubscribe = LinkRef.orderBy('createAt', 'desc').limit(15).onSnapshot(querySnapshot => {
         // データが更新されるたびに呼び出される
         console.log(querySnapshot.docs)
-        // querySnapshot.docs = querySnapshot.docs.sort(function () { return Math.random() - 0.5 })
         console.log(querySnapshot.docChanges())
         querySnapshot.docChanges().some(change => {
           console.log('インデックスには15件取得する')
@@ -166,17 +170,18 @@ export default {
           }
 
           // ミューテーションを通してステートを更新する
-          if (change.type === 'added') {
+          if (change.type === 'modified' && change.doc.data().link_id) {
             console.log('change.type add', change.type)
             // commit(ADD, payload)
-            commit('alldata', payload)
-          } else if (change.type === 'modified') {
+            console.log(change.doc.data())
+            commit('addData', change.doc.data())
+          } else if (change.type === 'added' && change.doc.data().link_id) {
             console.log('change.type add', change.type)
             // // commit(ADD, payload)
-            // console.log(payload)
-            // commit(ADD, payload)
+            console.log(change.doc.data())
+            commit(ADD, change.doc.data())
           } else if (change.type === 'removed') {
-            commit('REMOVE', payload)
+            commit('REMOVE', change.doc.data())
           }
         })
       },
@@ -200,6 +205,7 @@ export default {
           console.log('link_idを追加する')
           // link_idをDBに追加
           LinkRef.doc(doc.id).update({
+            'id': doc.id,
             'link_id': (doc.id).substr(0, 4)
           })
         })
