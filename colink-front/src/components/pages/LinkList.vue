@@ -5,13 +5,9 @@
      />
     <v-card>
       <v-container fluid grid-list-md>
-        <v-layout row wrap>
-          <!-- <h1>Index</h1> -->
-          <div class="row justify-content-center">
-            <!-- {{ links }} -->
+        <v-layout row wrap justify-content-center>
             <link-list-card v-for="(link, index) in links" v-bind:key="index" v-bind:link="link"></link-list-card>
             <link-list-form></link-list-form>
-          </div>
         </v-layout>
       </v-container>
     </v-card>

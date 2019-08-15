@@ -24,6 +24,7 @@ export default {
     // 受け取ったデータpayloadをステートに格納
     init (state, payload) {
       state.data = payload
+      state.alldata = payload
     },
     // リンク追加時
     [ADD] (state, payload) {
@@ -92,22 +93,6 @@ export default {
             console.log(change.doc.data())
             return
           }
-          const payload = {
-            id: change.doc.id,
-            link_id: (change.doc.id).substr(0, 4),
-            create_num: change.doc.data().create_num,
-            link_title: change.doc.data().link_title,
-            description: change.doc.data().description,
-            platforms: change.doc.data().platforms,
-            million: change.doc.data().million,
-            createAt: new Date(change.doc.data().createAt.seconds * 1000),
-            photo: change.doc.data().photo
-          }
-          console.log('add link_id')
-          LinkRef.doc(change.doc.id).update({
-            'link_id': payload.link_id
-          })
-          console.log(payload)
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
             console.log('change.type add', change.type)
@@ -131,32 +116,21 @@ export default {
       // firestoreからデータを検索する
       this.unsubscribe = LinkRef.onSnapshot(querySnapshot => {
         // データが更新されるたびに呼び出される
-        console.log(querySnapshot)
-        querySnapshot.docChanges().forEach(change => {
+        console.log(querySnapshot.docChanges())
+        querySnapshot.docChanges().some(change => {
           // querySnapshot.forEach(change => {
-          console.log('alllllinks.js')
+          console.log('インデックスには15件取得する')
+          console.log(change)
           console.log(change.doc.data())
           // 時刻がnullのものは表示しない
           if (!change.doc.data().createAt) {
             console.log(change.doc.data())
             return
           }
-          const payload = {
-            id: change.doc.id,
-            link_id: (change.doc.id).substr(0, 4),
-            create_num: change.doc.data().create_num,
-            link_title: change.doc.data().link_title,
-            description: change.doc.data().description,
-            platforms: change.doc.data().platforms,
-            million: change.doc.data().million,
-            createAt: new Date(change.doc.data().createAt.seconds * 1000),
-            photo: change.doc.data().photo
+          if (change.newIndex === 15) {
+            console.log('15件取得したので終わり')
+            return true
           }
-          console.log('add link_id')
-          LinkRef.doc(change.doc.id).update({
-            'link_id': payload.link_id
-          })
-          console.log(payload)
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
             console.log('change.type add', change.type)
@@ -180,7 +154,7 @@ export default {
       }
     },
     addLink ({ commit }, payload) {
-      console.log('addLink now')
+      console.log('DBに登録するよ')
       LinkRef.add(payload)
         .then(doc => {
           // ミューテーションの外でステート管理しない

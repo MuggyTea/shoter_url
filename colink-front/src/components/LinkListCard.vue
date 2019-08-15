@@ -5,7 +5,7 @@
   raised
   elevation="10"
   >
-    <v-container linkcard fill-height fluid pa-2>
+    <v-container fill-height fluid pa-2>
       <v-layout align-center fill-height>
         <v-flex align-end xs12 flexbox>
           <!-- <v-img :src="link.src" max-height="100px"></v-img> -->
@@ -14,11 +14,11 @@
           height="200px"
           v-if="link.userinfo.displayName"
           >
-          <router-link
+          <v-btn flat
           v-bind:to="{name: 'LinkList', params: {screen_name: link.screenName}}"
           >
           {{ link.userinfo.displayName }}
-          </router-link>
+          </v-btn>
           <v-else>
           </v-else>
           <v-card-title primary-title>
@@ -31,14 +31,10 @@
               </v-card-title>
               </v-img>
               <v-card-text>
-              <span class="grey--text">{{ formatedDescription }}</span>
+                <span class="grey--text">{{ formatedDescription }}</span>
               </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat>
-              <small class="text-muted">create at</small>
-              <span>{{ releasedAtFromNow }}</span>
-            </v-btn>
             <v-btn icon>
               <v-icon>favorite</v-icon>
             </v-btn>

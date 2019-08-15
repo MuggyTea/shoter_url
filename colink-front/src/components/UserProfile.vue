@@ -7,16 +7,17 @@ width="100%"
 <v-img
 v-if="userdata.backgroundPhoto"
 :src="userdata.backgroundPhoto"
-height="200px"
+height="100px"
 >
 </v-img>
 <v-img
 v-else
-height="200px"
+height="100px"
 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
 >
 </v-img>
-<v-avatar
+<v-card-title class="name align-end justify-center fill-height">
+    <v-avatar
 color="grey lighten-4"
 size="70px"
 >
@@ -25,19 +26,14 @@ v-if="userdata.photoURL"
 :src="userdata.photoURL"
 alt="profile"
 >
-<span v-else></span>
 </v-avatar>
-<v-card-title class="name align-end justify-center fill-height">
-    {{ userdata.displayName }}
-        <ul class="icon">
-      <li class="twitter"><a :href="userdata.twitterURL" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" /></a></li>
-    </ul>
+            {{ userdata.displayName }}
 </v-card-title>
-
+        <ul class="icon">
+        <li class="twitter"><a :href="userdata.twitterURL" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']" /></a></li>
+    </ul>
 <v-card-text>
-    <span class="txt">
-        <span>{{ userdata.description }}</span>
-    </span>
+    {{ userdata.description }}
 </v-card-text>
 </v-card>
 </v-container>
