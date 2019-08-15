@@ -9,6 +9,10 @@
       <v-layout align-center fill-height>
         <v-flex align-end xs12 flexbox>
           <!-- <v-img :src="link.src" max-height="100px"></v-img> -->
+                        <router-link
+                v-bind:to="{name: 'LinkPage',
+            params: {link_id: link.link_id, id: link.id, screen_name: link.screenName} }"
+              >
           <v-img
           src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
           height="200px"
@@ -19,21 +23,18 @@
           >
           {{ link.userinfo.displayName }}
           </v-btn>
-          <v-else>
-          </v-else>
-          <v-card-title primary-title>
-              <router-link
-                v-bind:to="{name: 'LinkPage',
-            params: {link_id: link.link_id, id: link.id, screen_name: link.screenName} }"
-              >
-                <div color class="headline">{{ formatedTitle }}</div>
-              </router-link>
+          </v-img>
+          </router-link>
+          <router-link v-bind:to="{name: 'LinkPage',
+            params: {link_id: link.link_id, id: link.id, screen_name: link.screenName} }">
+          <v-card-title class="card__title">
+            <h3>{{ formatedTitle }}</h3>
               </v-card-title>
-              </v-img>
-              <v-card-text>
-                <span class="grey--text">{{ formatedDescription }}</span>
+              </router-link>
+              <v-card-text class="card__text">
+                <h6 class="grey--text">{{ formatedDescription }}</h6>
               </v-card-text>
-          <v-card-actions>
+          <v-card-actions class="card__actions">
             <v-spacer></v-spacer>
             <v-btn icon>
               <v-icon>favorite</v-icon>
@@ -110,5 +111,17 @@ export default {
 <style>
 .linkcard {
   padding:1px;
+}
+.card__title {
+  padding-top:5px;
+  padding-bottom: 5px;
+  color:#000;
+}
+.card__text {
+  padding-top:1px;
+  padding-bottom: 5px;
+}
+.card__actions {
+  padding:0px;
 }
 </style>

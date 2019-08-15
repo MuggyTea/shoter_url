@@ -69,10 +69,11 @@ export default {
   },
   methods: {
     init () {
-      console.log('メモを検索する')
+      console.log('インデックス初期化')
       this.$store.dispatch('links/clear')
     },
     start () {
+      console.log('インデックスリストをDBから取ってくる')
       this.$store.dispatch('links/startListenerAll')
     },
     stop () {
@@ -96,7 +97,7 @@ export default {
       return this.$store.getters['auth/check']
     },
     alllinks () {
-      console.log('getter')
+      console.log('alllinks取得')
       console.log(this.$store.getters['links/alldata'])
       return this.$store.getters['links/alldata']
     }

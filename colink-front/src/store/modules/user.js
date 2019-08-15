@@ -34,7 +34,7 @@ const actions = {
         context.commit('setUser', doc.data())
       })
     })
-    return this.doc.data()
+    // return this.doc.data()
       .catch(function (error) {
         console.log('Error getting documents: ', error)
       })

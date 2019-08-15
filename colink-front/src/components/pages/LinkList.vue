@@ -47,10 +47,10 @@ export default {
     'link-list-form': LinkListForm,
     'user-profile': UserProfile
   },
-  data () {
-    return {
-    }
-  },
+  // data () {
+  //   return {
+  //   }
+  // },
   props: [
     'screen_name'
   ],

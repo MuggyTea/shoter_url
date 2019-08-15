@@ -17,7 +17,6 @@ export default {
       // 配列
       data: [],
       alldata: []
-      //   create_num: 0
     }
   },
   mutations: {
@@ -78,7 +77,7 @@ export default {
       if (!userinfo.screenName || !userinfo) {
         console.warn('user does not exist')
         console.log(userinfo)
-        return
+        userinfo.screenName = null
       }
       // firestoreからデータを検索する
       this.unsubscribe = LinkRef.where('screenName', '==', userinfo.screenName).onSnapshot(querySnapshot => {
@@ -114,23 +113,25 @@ export default {
         this.unsubscribe = null
       }
       // firestoreからデータを検索する
-      this.unsubscribe = LinkRef.onSnapshot(querySnapshot => {
+      this.unsubscribe = LinkRef.orderBy('createAt', 'desc').limit(15).onSnapshot(querySnapshot => {
         // データが更新されるたびに呼び出される
+        console.log(querySnapshot.docs)
+        // querySnapshot.docs = querySnapshot.docs.sort(function () { return Math.random() - 0.5 })
         console.log(querySnapshot.docChanges())
         querySnapshot.docChanges().some(change => {
-          // querySnapshot.forEach(change => {
           console.log('インデックスには15件取得する')
           console.log(change)
           console.log(change.doc.data())
-          // 時刻がnullのものは表示しない
-          if (!change.doc.data().createAt) {
+          // 時刻がnullのものとログインユーザー以外は表示しない
+          if (!change.doc.data().screenName || !change.doc.data().createAt) {
+            console.warn('user does not exist')
             console.log(change.doc.data())
             return
           }
-          if (change.newIndex === 15) {
-            console.log('15件取得したので終わり')
-            return true
-          }
+          // if (change.newIndex === 15) {
+          //   console.log('15件取得したので終わり')
+          //   return true
+          // }
           // ミューテーションを通してステートを更新する
           if (change.type === 'added') {
             console.log('change.type add', change.type)

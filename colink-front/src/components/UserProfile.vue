@@ -42,13 +42,6 @@ alt="profile"
 <script>
 export default {
   name: 'UserProfile',
-  data: function () {
-    return {
-    //   userData: this.payload
-    //   userdata: this.userdata()
-    //   userName: this.user_profile
-    }
-  },
   props: {
     'user_profile': {
       type: String,
