@@ -124,11 +124,13 @@ export default {
       console.log(event.target.files)
       if (event.target.files.length === 0) {
         console.log(event.target.files.length)
+        this.reset()
         return false
       }
       // ファイルが画像でなかったら処理中断
       if (!event.target.files[0].type.match('image/*')) {
         console.log(event.target.files[0].type)
+        this.reset()
         return false
       }
       // ファイルリーダーを立ち上げる
@@ -152,6 +154,10 @@ export default {
       // ファイルを読み込む
       // 読み込まれたファイルはデータURL形式で受け取れる（上記onload参照）
       reader.readAsDataURL(event.target.files[0])
+    },
+    reset () {
+      this.preview = ''
+      this.$el.querySelector('input[type="file]').value = null
     },
     // 画像アップロード処理
     uploadPhoto () {
